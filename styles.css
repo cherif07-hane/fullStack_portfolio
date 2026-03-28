@@ -1,0 +1,52 @@
+/* ===== STYLE GLOBAL ===== */
+body {
+    margin: 0;
+    font-family: Arial;
+}
+
+/* ===== HEADER ===== */
+header {
+    position: fixed; /* reste en haut */
+    top: 0;
+    width: 100%;
+    background: #333;
+    color: white;
+
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+/* LOGO */
+.logo {
+    font-weight: bold;
+}
+
+/* MENU */
+nav a {
+    color: white;
+    margin-left: 15px;
+    text-decoration: none;
+}
+
+/* CONTENU */
+.container {
+    margin-top: 80px; /* évite overlap header */
+    padding: 20px;
+}
+
+/* PROJET */
+.project {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+/* FOOTER */
+footer {
+    position: fixed; /* reste en bas */
+    bottom: 0;
+    width: 100%;
+    background: #333;
+    color: white;
+    text-align: center;
+}
