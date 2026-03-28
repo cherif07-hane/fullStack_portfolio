@@ -31,10 +31,12 @@ nav a {
 
 /* CONTENU */
 .container {
-    margin-top: 80px; /* évite overlap header */
+    margin-top: 80px;
     padding: 20px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
 }
-
 /* PROJET */
 .project {
     border: 1px solid #ccc;
