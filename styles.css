@@ -47,6 +47,18 @@ nav a {
     transform: scale(1.02);
     transition: 0.3s;
 }
+button {
+    background: crimson;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* hover */
+button:hover {
+    background: darkred;
+}
 
 /* FOOTER */
 footer {
