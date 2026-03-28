@@ -44,6 +44,10 @@ nav a {
     margin-bottom: 20px;
     border-radius: 10px;
 }
+.project a {
+    text-decoration: none;
+    color: black;
+}
 /* effet au survol */
 .project:hover {
     transform: scale(1.02);
