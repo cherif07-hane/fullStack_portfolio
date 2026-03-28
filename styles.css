@@ -15,6 +15,7 @@ header {
     display: flex;
     justify-content: space-between; /* gauche / droite */
     align-items: center
+    
 }
 
 /* LOGO */
@@ -36,6 +37,8 @@ nav a {
     max-width: 900px;
     margin-left: auto;
     margin-right: auto;
+    padding-top: 100px;  /* hauteur header + marge */
+    padding-bottom: 80px; /* hauteur footer + marge */
 }
 /* PROJET */
 .project {
@@ -97,4 +100,41 @@ input, textarea {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
+}
+
+/* Conteneur en grille */
+.projects-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* Projet individuel */
+.project {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #fafafa;
+}
+
+/* Images limitées pour uniformité */
+.project img {
+    width: 100%;       /* occupe tout le bloc du projet */
+    max-height: 200px; /* hauteur max */
+    object-fit: cover; /* recadrage automatique si image trop grande */
+    border-radius: 5px;
+}
+
+/* Lien "Voir les détails" */
+.details-link {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: bold;
+}
+
+.details-link:hover {
+    color: #0056b3;
 }
