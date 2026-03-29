@@ -138,3 +138,21 @@ input, textarea {
 .details-link:hover {
     color: #0056b3;
 }
+
+.delete-btn {
+    background: crimson;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* effet hover */
+.delete-btn:hover {
+    background: darkred;
+}
+.content {
+    padding-top: 100px;
+    padding-bottom: 100px; /* IMPORTANT pour voir le bouton */
+}
