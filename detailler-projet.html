@@ -10,8 +10,22 @@
     <div class="flex min-h-screen flex-col">
         <header class="border-b border-slate-800 bg-brand-dark text-white">
             <div class="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-5 md:flex-row md:items-center md:justify-between md:px-6">
-                <a href="index.html" class="text-2xl font-bold tracking-wide">MonPortfolio</a>
-                <nav class="flex flex-col gap-3 text-sm font-semibold md:flex-row md:items-center md:gap-6">
+                <div class="flex items-center justify-between">
+                    <a href="index.html" class="text-2xl font-bold tracking-wide">MonPortfolio</a>
+
+                    <details class="md:hidden">
+                        <summary class="cursor-pointer list-none rounded-full border border-brand-accent px-4 py-2 text-sm font-semibold text-brand-accent">
+                            Menu
+                        </summary>
+                        <nav class="mt-4 flex flex-col gap-3 rounded-2xl border border-slate-700 bg-slate-900 p-4 text-sm font-semibold">
+                            <a href="index.html" class="hover:text-brand-accent">Accueil</a>
+                            <a href="lister-projets.html" class="hover:text-brand-accent">Projets</a>
+                            <a href="ajouter-projet.html" class="hover:text-brand-accent">Ajouter</a>
+                        </nav>
+                    </details>
+                </div>
+
+                <nav class="hidden text-sm font-semibold md:flex md:items-center md:gap-6">
                     <a href="index.html" class="pb-1 hover:text-brand-accent">Accueil</a>
                     <a href="lister-projets.html" class="pb-1 hover:text-brand-accent">Projets</a>
                     <a href="ajouter-projet.html" class="rounded-full border border-brand-accent px-4 py-2 text-center hover:bg-brand-accent hover:text-brand-dark">Ajouter</a>
