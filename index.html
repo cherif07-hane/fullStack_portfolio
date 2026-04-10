@@ -178,6 +178,7 @@
                             </div>
 
                             <form id="project-form" class="project-form">
+                                <input id="project-edit-id" name="editId" type="hidden">
                                 <div class="field-group">
                                     <label for="project-title">Titre du projet</label>
                                     <input id="project-title" name="title" type="text" placeholder="Ex: Projet support" required>
@@ -213,7 +214,7 @@
                                     <textarea id="project-description" name="description" rows="5" placeholder="Ce que tu as realise." required></textarea>
                                 </div>
 
-                                <button class="button button-primary button-full" type="submit">Ajouter le projet</button>
+                                <button class="button button-primary button-full" type="submit" id="project-submit-button">Ajouter le projet</button>
                             </form>
                         </section>
 

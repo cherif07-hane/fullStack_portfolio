@@ -10,6 +10,14 @@ const references = {
     searchInput: null,
     kindFilter: null,
     sortSelect: null,
+    editId: null,
+    titleInput: null,
+    periodInput: null,
+    imageInput: null,
+    stackInput: null,
+    linkInput: null,
+    descriptionInput: null,
+    submitButton: null,
     form: null,
     toast: null,
     imageFile: null
@@ -31,6 +39,14 @@ function referencerContenusHTML() {
     references.searchInput = document.querySelector("#project-search");
     references.kindFilter = document.querySelector("#project-kind-filter");
     references.sortSelect = document.querySelector("#project-sort");
+    references.editId = document.querySelector("#project-edit-id");
+    references.titleInput = document.querySelector("#project-title");
+    references.periodInput = document.querySelector("#project-period");
+    references.imageInput = document.querySelector("#project-image");
+    references.stackInput = document.querySelector("#project-stack");
+    references.linkInput = document.querySelector("#project-link");
+    references.descriptionInput = document.querySelector("#project-description");
+    references.submitButton = document.querySelector("#project-submit-button");
     references.form = document.querySelector("#project-form");
     references.toast = document.querySelector("#toast");
     references.imageFile = document.querySelector("#project-image-file");
@@ -159,7 +175,14 @@ function creerCarteProjet(projet) {
     supprimer.textContent = "Supprimer";
     supprimer.addEventListener("click", () => supprimerProjet(projet.id));
 
+    const modifier = document.createElement("button");
+    modifier.type = "button";
+    modifier.className = "mini-button";
+    modifier.textContent = "Modifier";
+    modifier.addEventListener("click", () => chargerProjetDansFormulaire(projet.id));
+
     actions.appendChild(voirPlus);
+    actions.appendChild(modifier);
     actions.appendChild(supprimer);
 
     corps.appendChild(top);
@@ -172,6 +195,25 @@ function creerCarteProjet(projet) {
     carte.appendChild(corps);
 
     return carte;
+}
+
+function chargerProjetDansFormulaire(idProjet) {
+    const projet = projets.find((item) => item.id === idProjet);
+
+    if (!projet) {
+        return;
+    }
+
+    references.editId.value = projet.id;
+    references.titleInput.value = projet.title;
+    references.periodInput.value = projet.id;
+    references.imageInput.value = projet.image.startsWith("data:") ? "" : projet.image;
+    references.stackInput.value = projet.stack.join(", ");
+    references.linkInput.value = projet.link === "#" ? "" : projet.link;
+    references.descriptionInput.value = projet.description;
+    references.submitButton.textContent = "Mettre a jour le projet";
+    afficherVue("projets");
+    allerVersCible("add-project-panel");
 }
 
 function filtrerProjets() {
@@ -238,6 +280,7 @@ async function lireFormulaire() {
     const donnees = new FormData(references.form);
     const fichier = references.imageFile.files?.[0];
     let image = String(donnees.get("image") || "").trim();
+    const editId = String(donnees.get("editId") || "").trim();
 
     if (fichier) {
         image = await lireFichierCommeDataURL(fichier);
@@ -254,7 +297,8 @@ async function lireFormulaire() {
         description: String(donnees.get("description") || "").trim(),
         link: String(donnees.get("link") || "").trim() || "#",
         kind: "Projet personnel",
-        points: ["Projet ajoute depuis le portfolio"]
+        points: ["Projet ajoute depuis le portfolio"],
+        editId
     };
 }
 
@@ -268,13 +312,29 @@ async function ajouterProjet(evenement) {
         return;
     }
 
-    projets.unshift(nouveauProjet);
+    if (nouveauProjet.editId) {
+        const index = projets.findIndex((item) => item.id === nouveauProjet.editId);
+
+        if (index !== -1) {
+            projets[index] = {
+                ...projets[index],
+                ...nouveauProjet,
+                editId: undefined
+            };
+            afficherToast(`Projet mis a jour : ${nouveauProjet.title}`);
+        }
+    } else {
+        projets.unshift(nouveauProjet);
+        afficherToast(`Projet ajoute : ${nouveauProjet.title}`);
+    }
+
     references.form.reset();
+    references.editId.value = "";
+    references.submitButton.textContent = "Ajouter le projet";
     rendreProjets();
     sauvegarderProjets();
     afficherVue("projets");
     window.location.hash = "#projets";
-    afficherToast(`Projet ajoute : ${nouveauProjet.title}`);
 }
 
 function gererHash() {
