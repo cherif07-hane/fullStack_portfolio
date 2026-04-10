@@ -1,0 +1,40 @@
+{
+  "projets": [
+    {
+      "id": "portfolio-1",
+      "title": "Portfolio Motion",
+      "image": "images/projet1.jpg",
+      "stack": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "description": "Landing page éditoriale avec mise en avant du storytelling, transitions douces et hiérarchie visuelle premium.",
+      "link": "https://example.com/portfolio-motion"
+    },
+    {
+      "id": "portfolio-2",
+      "title": "Studio Data UI",
+      "image": "images/projet2.jpg",
+      "stack": [
+        "Dashboard",
+        "API REST",
+        "UI"
+      ],
+      "description": "Interface d'analyse pour suivre des indicateurs de performance et mettre en scène les données de manière lisible.",
+      "link": "https://example.com/studio-data-ui"
+    },
+    {
+      "id": "portfolio-3",
+      "title": "Creative Case Study",
+      "image": "images/Projet3.jpg",
+      "stack": [
+        "Responsive",
+        "Branding",
+        "UX"
+      ],
+      "description": "Présentation d'un cas client avec blocs narratifs, détail du process créatif et galerie optimisée pour mobile.",
+      "link": "https://example.com/creative-case-study"
+    }
+  ]
+}
