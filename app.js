@@ -8,6 +8,7 @@ const references = {
     statsProjects: null,
     searchInput: null,
     kindFilter: null,
+    sortSelect: null,
     form: null,
     toast: null,
     imageFile: null
@@ -16,7 +17,8 @@ const references = {
 let toastTimeoutId = null;
 const state = {
     search: "",
-    kind: "all"
+    kind: "all",
+    sort: "recent"
 };
 
 function referencerContenusHTML() {
@@ -27,6 +29,7 @@ function referencerContenusHTML() {
     references.statsProjects = document.querySelector("#stats-projets");
     references.searchInput = document.querySelector("#project-search");
     references.kindFilter = document.querySelector("#project-kind-filter");
+    references.sortSelect = document.querySelector("#project-sort");
     references.form = document.querySelector("#project-form");
     references.toast = document.querySelector("#toast");
     references.imageFile = document.querySelector("#project-image-file");
@@ -148,7 +151,7 @@ function creerCarteProjet(projet) {
 }
 
 function filtrerProjets() {
-    return projets.filter((projet) => {
+    const projetsFiltres = projets.filter((projet) => {
         const recherche = state.search.toLowerCase();
         const correspondRecherche = !recherche
             || projet.title.toLowerCase().includes(recherche)
@@ -158,6 +161,14 @@ function filtrerProjets() {
         const correspondType = state.kind === "all" || projet.kind === state.kind;
         return correspondRecherche && correspondType;
     });
+
+    if (state.sort === "title") {
+        projetsFiltres.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (state.sort === "kind") {
+        projetsFiltres.sort((a, b) => a.kind.localeCompare(b.kind) || a.title.localeCompare(b.title));
+    }
+
+    return projetsFiltres;
 }
 
 function rendreProjets() {
@@ -255,6 +266,10 @@ function initialiserEvenements() {
     });
     references.kindFilter.addEventListener("change", (event) => {
         state.kind = event.target.value;
+        rendreProjets();
+    });
+    references.sortSelect.addEventListener("change", (event) => {
+        state.sort = event.target.value;
         rendreProjets();
     });
 
