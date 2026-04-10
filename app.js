@@ -1,4 +1,5 @@
 const projets = Array.isArray(window.PORTFOLIO_PROJECTS) ? [...window.PORTFOLIO_PROJECTS] : [];
+const STORAGE_KEY = "thierno-hane-portfolio-projects";
 
 const references = {
     viewLinks: [],
@@ -66,6 +67,29 @@ function afficherToast(message) {
     toastTimeoutId = window.setTimeout(() => {
         references.toast.classList.remove("visible");
     }, 2400);
+}
+
+function sauvegarderProjets() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(projets));
+}
+
+function chargerProjetsDepuisLocalStorage() {
+    const projetsSauvegardes = localStorage.getItem(STORAGE_KEY);
+
+    if (!projetsSauvegardes) {
+        return;
+    }
+
+    try {
+        const donnees = JSON.parse(projetsSauvegardes);
+
+        if (Array.isArray(donnees)) {
+            projets.length = 0;
+            donnees.forEach((projet) => projets.push(projet));
+        }
+    } catch (erreur) {
+        console.error("Impossible de relire les projets locaux.", erreur);
+    }
 }
 
 function mettreAJourCompteurs() {
@@ -197,6 +221,7 @@ function supprimerProjet(idProjet) {
 
     const [supprime] = projets.splice(index, 1);
     rendreProjets();
+    sauvegarderProjets();
     afficherToast(`Projet supprime : ${supprime.title}`);
 }
 
@@ -246,6 +271,7 @@ async function ajouterProjet(evenement) {
     projets.unshift(nouveauProjet);
     references.form.reset();
     rendreProjets();
+    sauvegarderProjets();
     afficherVue("projets");
     window.location.hash = "#projets";
     afficherToast(`Projet ajoute : ${nouveauProjet.title}`);
@@ -284,6 +310,7 @@ function initialiserEvenements() {
 
 function initialiserApplication() {
     referencerContenusHTML();
+    chargerProjetsDepuisLocalStorage();
     initialiserEvenements();
     rendreProjets();
     gererHash();
