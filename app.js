@@ -7,6 +7,9 @@ const references = {
     projectsContainer: null,
     countBadge: null,
     statsProjects: null,
+    filteredCount: null,
+    kindCount: null,
+    techCount: null,
     searchInput: null,
     kindFilter: null,
     sortSelect: null,
@@ -41,6 +44,9 @@ function referencerContenusHTML() {
     references.projectsContainer = document.querySelector("#projects-container");
     references.countBadge = document.querySelector("#project-count-badge");
     references.statsProjects = document.querySelector("#stats-projets");
+    references.filteredCount = document.querySelector("#filtered-count");
+    references.kindCount = document.querySelector("#kind-count");
+    references.techCount = document.querySelector("#tech-count");
     references.searchInput = document.querySelector("#project-search");
     references.kindFilter = document.querySelector("#project-kind-filter");
     references.sortSelect = document.querySelector("#project-sort");
@@ -118,9 +124,15 @@ function chargerProjetsDepuisLocalStorage() {
 }
 
 function mettreAJourCompteurs() {
-    const total = filtrerProjets().length;
+    const projetsVisibles = filtrerProjets();
+    const total = projetsVisibles.length;
     references.countBadge.textContent = `${total} projet${total > 1 ? "s" : ""}`;
     references.statsProjects.textContent = String(projets.length);
+    references.filteredCount.textContent = String(total);
+    references.kindCount.textContent = String(new Set(projetsVisibles.map((projet) => projet.kind)).size);
+    references.techCount.textContent = String(
+        new Set(projetsVisibles.flatMap((projet) => projet.stack)).size
+    );
 }
 
 function creerTag(texte) {
