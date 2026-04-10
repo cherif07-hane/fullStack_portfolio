@@ -3,113 +3,252 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil - Portfolio</title>
+    <title>Portfolio Lab SPA | Vanilla JavaScript</title>
+    <meta name="description" content="Application SPA de gestion de portfolio en Vanilla JavaScript avec persistance json-server et interface premium.">
     <link rel="icon" type="image/jpeg" href="images/logo.jpg">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="min-h-screen bg-brand-light font-body text-slate-900">
-    <div class="flex min-h-screen flex-col">
-        <header class="border-b border-slate-800 bg-brand-dark text-white">
-            <div class="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-5 md:flex-row md:items-center md:justify-between md:px-6">
-                <div class="flex items-center justify-between">
-                    <a href="index.html" class="flex items-center gap-3">
-                        <img src="images/logo.jpg" alt="Logo MonPortfolio" class="h-12 w-12 rounded-full border border-brand-accent object-cover">
-                        <span class="text-2xl font-bold tracking-wide">MonPortfolio</span>
-                    </a>
-
-                    <details class="md:hidden">
-                        <summary class="cursor-pointer list-none rounded-full border border-brand-accent px-4 py-2 text-sm font-semibold text-brand-accent">
-                            Menu
-                        </summary>
-                        <nav class="mt-4 flex flex-col gap-3 rounded-2xl border border-slate-700 bg-slate-900 p-4 text-sm font-semibold">
-                            <a href="index.html" class="text-brand-accent">Accueil</a>
-                            <a href="lister-projets.html" class="hover:text-brand-accent">Projets</a>
-                            <a href="ajouter-projet.html" class="hover:text-brand-accent">Ajouter</a>
-                        </nav>
-                    </details>
+<body>
+    <div class="page-shell">
+        <header class="site-header">
+            <a class="brand" href="#top" aria-label="Retour en haut de page">
+                <img src="images/logo.jpg" alt="Logo Portfolio Lab">
+                <div>
+                    <span class="eyebrow">Portfolio Lab</span>
+                    <strong>SPA Portfolio Manager</strong>
                 </div>
+            </a>
 
-                <nav class="hidden text-sm font-semibold md:flex md:items-center md:gap-6">
-                    <a href="index.html" class="border-b-2 border-brand-accent pb-1 text-brand-accent">Accueil</a>
-                    <a href="lister-projets.html" class="pb-1 hover:text-brand-accent">Projets</a>
-                    <a href="ajouter-projet.html" class="rounded-full border border-brand-accent px-4 py-2 text-center hover:bg-brand-accent hover:text-brand-dark">Ajouter</a>
-                </nav>
-            </div>
+            <nav class="site-nav" aria-label="Navigation principale">
+                <a href="#guide">Guide JavaScript</a>
+                <a href="#demo">Démonstration</a>
+                <a href="#studio">Studio projets</a>
+                <a class="nav-cta" href="#studio">Créer un projet</a>
+            </nav>
         </header>
 
-        <main class="flex-1">
-            <section class="mx-auto flex w-full max-w-6xl flex-col gap-10 px-4 py-10 md:px-6 md:py-14">
-                <div class="rounded-3xl border border-slate-200 bg-white px-6 py-8 md:px-10 md:py-12">
-                    <p class="text-sm font-semibold uppercase tracking-[0.3em] text-brand-primary">Portfolio développeur</p>
-                    <h1 class="mt-4 text-4xl font-bold leading-tight text-brand-dark md:text-5xl">Bienvenue sur mon portfolio</h1>
-                    <p class="mt-4 max-w-3xl text-base leading-7 text-slate-700 md:text-lg">
-                        Je présente ici plusieurs projets réalisés en HTML, CSS et JavaScript avec une interface claire, responsive et cohérente, pensée pour rester simple à maintenir.
+        <main id="top">
+            <section class="hero">
+                <div class="hero-copy">
+                    <p class="eyebrow">Single Page Application</p>
+                    <h1>Un portfolio moderne, dynamique et persistant en Vanilla JavaScript.</h1>
+                    <p class="hero-text">
+                        Cette réalisation transforme le portfolio existant en une SPA complète : gestion des projets en mémoire,
+                        interactions DOM, requêtes AJAX avec <code>json-server</code>, et une interface pensée pour donner un rendu
+                        plus premium, plus clair et plus crédible.
                     </p>
-                    <p class="mt-3 max-w-3xl text-base leading-7 text-slate-700 md:text-lg">
-                        Cette version a été refactorisée avec Tailwind CSS en s'appuyant sur les couleurs, la typographie, les arrière-plans, les dimensions, les bordures, l'espacement, les modificateurs, le flex, le responsive et la personnalisation.
+
+                    <div class="hero-actions">
+                        <a class="button button-primary" href="#studio">Lancer la démo</a>
+                        <a class="button button-ghost" href="#guide">Voir le plan JavaScript</a>
+                    </div>
+
+                    <div class="hero-metrics" aria-label="Résumé rapide">
+                        <article>
+                            <strong id="stats-projets">0</strong>
+                            <span>projets affichés</span>
+                        </article>
+                        <article>
+                            <strong id="stats-source">Mémoire</strong>
+                            <span>source de données</span>
+                        </article>
+                        <article>
+                            <strong>SPA</strong>
+                            <span>une seule page</span>
+                        </article>
+                    </div>
+                </div>
+
+                <aside class="hero-panel">
+                    <p class="eyebrow">Cibles du livrable</p>
+                    <ul class="feature-list">
+                        <li>Référencer les contenus HTML avec <code>document.querySelector</code>.</li>
+                        <li>Manipuler le tableau <code>projets</code> en mémoire.</li>
+                        <li>Créer, détailler et supprimer des projets dans le DOM.</li>
+                        <li>Persister les données via une API REST factice.</li>
+                    </ul>
+
+                    <div class="status-card">
+                        <span class="status-dot" id="api-dot"></span>
+                        <div>
+                            <strong id="api-status-title">Connexion API en attente</strong>
+                            <p id="api-status-text">Chargement initial des projets...</p>
+                        </div>
+                    </div>
+                </aside>
+            </section>
+
+            <section class="content-section" id="guide">
+                <div class="section-heading">
+                    <p class="eyebrow">Plan du cours</p>
+                    <h2>Guide JavaScript structuré selon les notions demandées</h2>
+                    <p>
+                        La page présente la démo technique et rappelle les points attendus : présentation, inclusion,
+                        concepts fondamentaux, références de recherche et mise en pratique dans une application réelle.
                     </p>
                 </div>
 
-                <section class="flex flex-col gap-6">
-                    <div class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-                        <div>
-                            <p class="text-sm font-semibold uppercase tracking-[0.3em] text-brand-primary">Sélection</p>
-                            <h2 class="text-3xl font-bold text-brand-dark">Mes projets</h2>
+                <div class="guide-grid">
+                    <article class="guide-card">
+                        <span class="guide-index">01</span>
+                        <h3>Présentation de JavaScript</h3>
+                        <p>
+                            JavaScript est le langage du comportement côté client. Il permet de rendre une page vivante,
+                            d'interagir avec l'utilisateur, de manipuler le DOM et d'échanger des données avec un serveur.
+                        </p>
+                    </article>
+
+                    <article class="guide-card">
+                        <span class="guide-index">02</span>
+                        <h3>Inclusion du JavaScript</h3>
+                        <p>
+                            Ici, le script est inclus avec <code>&lt;script src="app.js" defer&gt;&lt;/script&gt;</code>
+                            afin d'attendre le chargement du HTML avant l'exécution de la logique applicative.
+                        </p>
+                    </article>
+
+                    <article class="guide-card guide-card-wide">
+                        <span class="guide-index">03</span>
+                        <h3>Concepts mobilisés dans la démo</h3>
+                        <div class="concept-grid">
+                            <div><strong>Variables</strong><span><code>let projets = []</code> conserve l'état de l'application.</span></div>
+                            <div><strong>Opérateurs</strong><span>Utilisation de <code>===</code>, <code>?.</code>, <code>||</code>, <code>??</code> et des gabarits.</span></div>
+                            <div><strong>Entrée / Sortie</strong><span>Lecture du formulaire, affichage des messages et rendu visuel des cartes.</span></div>
+                            <div><strong>Structures</strong><span><code>if</code>, <code>try/catch</code>, boucles et méthodes de tableaux.</span></div>
+                            <div><strong>Fonctions</strong><span>Fonctions nommées, fonctions fléchées, callbacks d'événements et promesses.</span></div>
+                            <div><strong>Événements</strong><span><code>submit</code>, <code>click</code>, <code>hashchange</code> et interactions boutons.</span></div>
+                            <div><strong>Objets</strong><span>Chaque projet est un objet contenant id, libellé, image, stack et description.</span></div>
+                            <div><strong>Objet Array</strong><span><code>map</code>, <code>find</code>, <code>filter</code>, <code>unshift</code>.</span></div>
+                            <div><strong>Objet Document</strong><span>Référencement et création de nœuds HTML dynamiques.</span></div>
+                            <div><strong>Objet Form</strong><span>Lecture via <code>FormData</code> et validation légère du formulaire.</span></div>
+                            <div><strong>Requêtes AJAX</strong><span><code>fetch()</code> pour <code>GET</code>, <code>POST</code> et <code>DELETE</code>.</span></div>
                         </div>
-                        <a href="lister-projets.html" class="text-sm font-semibold text-brand-primary hover:text-brand-dark">Voir toute la liste</a>
+                    </article>
+
+                    <article class="guide-card">
+                        <span class="guide-index">04</span>
+                        <h3>Références</h3>
+                        <ul class="reference-list">
+                            <li><a href="https://developer.mozilla.org/fr/docs/Web/JavaScript" target="_blank" rel="noreferrer">MDN JavaScript</a></li>
+                            <li><a href="https://developer.mozilla.org/fr/docs/Web/API/Document_Object_Model" target="_blank" rel="noreferrer">MDN DOM</a></li>
+                            <li><a href="https://developer.mozilla.org/fr/docs/Web/API/Fetch_API" target="_blank" rel="noreferrer">MDN Fetch API</a></li>
+                            <li><a href="https://github.com/typicode/json-server" target="_blank" rel="noreferrer">Documentation json-server</a></li>
+                        </ul>
+                    </article>
+                </div>
+            </section>
+
+            <section class="content-section demo-section" id="demo">
+                <div class="section-heading">
+                    <p class="eyebrow">Démo</p>
+                    <h2>Application Web SPA de gestion de portfolio</h2>
+                    <p>
+                        Le formulaire ajoute un projet, la liste se met à jour sans rechargement, la carte de détail affiche les
+                        caractéristiques sélectionnées, et les traitements peuvent être persistés sur <code>json-server</code>.
+                    </p>
+                </div>
+
+                <div class="demo-banner">
+                    <div>
+                        <strong>API attendue :</strong>
+                        <code>http://localhost:3000/projets</code>
+                    </div>
+                    <button class="button button-secondary" type="button" id="refresh-projects">
+                        Recharger depuis l'API
+                    </button>
+                </div>
+            </section>
+
+            <section class="studio" id="studio">
+                <div class="studio-form-panel">
+                    <div class="panel-heading">
+                        <p class="eyebrow">Créer</p>
+                        <h2>Ajouter un projet au portfolio</h2>
+                        <p>
+                            Le code JavaScript référence ce formulaire, extrait ses valeurs, crée un objet projet,
+                            puis appelle <code>ajouterProjet()</code> pour mettre à jour la mémoire, l'interface et l'API.
+                        </p>
                     </div>
 
-                    <div class="-mx-3 flex flex-wrap">
-                        <article class="mb-6 w-full px-3 md:w-1/2 lg:w-1/3">
-                            <div class="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-5">
-                                <img src="images/projet1.jpg" alt="Aperçu du projet 1" class="h-52 w-full rounded-2xl border border-slate-200 object-cover">
-                                <h3 class="mt-5 text-2xl font-semibold text-brand-dark">Projet 1</h3>
-                                <p class="mt-3 flex-1 text-sm leading-6 text-slate-600">Présentation d'un projet web avec une mise en page simple, lisible et adaptée aux petits écrans grâce à une structure flexible.</p>
-                                <a href="detailler-projet.html" class="mt-5 inline-flex w-fit rounded-full border border-brand-primary px-4 py-2 text-sm font-semibold text-brand-primary hover:bg-brand-primary hover:text-white">Voir les détails</a>
-                            </div>
-                        </article>
+                    <form id="project-form" class="project-form">
+                        <div class="field-group">
+                            <label for="project-title">Libellé</label>
+                            <input id="project-title" name="title" type="text" placeholder="Ex: Dashboard analytique" required>
+                        </div>
 
-                        <article class="mb-6 w-full px-3 md:w-1/2 lg:w-1/3">
-                            <div class="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-5">
-                                <img src="images/projet2.jpg" alt="Aperçu du projet 2" class="h-52 w-full rounded-2xl border border-slate-200 object-cover">
-                                <h3 class="mt-5 text-2xl font-semibold text-brand-dark">Projet 2</h3>
-                                <p class="mt-3 flex-1 text-sm leading-6 text-slate-600">Exemple de page visuelle structurée avec une hiérarchie typographique plus nette, des espaces mieux gérés et des bordures plus cohérentes.</p>
-                                <a href="detailler-projet.html" class="mt-5 inline-flex w-fit rounded-full border border-brand-primary px-4 py-2 text-sm font-semibold text-brand-primary hover:bg-brand-primary hover:text-white">Voir les détails</a>
-                            </div>
-                        </article>
+                        <div class="field-group">
+                            <label for="project-image">Source de l'image</label>
+                            <input id="project-image" name="image" type="url" placeholder="https://... ou images/projet1.jpg" required>
+                        </div>
 
-                        <article class="mb-6 w-full px-3 md:w-1/2 lg:w-1/3">
-                            <div class="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-5">
-                                <img src="images/Projet3.jpg" alt="Aperçu du projet 3" class="h-52 w-full rounded-2xl border border-slate-200 object-cover">
-                                <h3 class="mt-5 text-2xl font-semibold text-brand-dark">Projet 3</h3>
-                                <p class="mt-3 flex-1 text-sm leading-6 text-slate-600">Projet orienté responsive design avec un affichage en colonnes sur grand écran, en pile sur mobile et un dimensionnement uniforme des visuels.</p>
-                                <a href="detailler-projet.html" class="mt-5 inline-flex w-fit rounded-full border border-brand-primary px-4 py-2 text-sm font-semibold text-brand-primary hover:bg-brand-primary hover:text-white">Voir les détails</a>
+                        <div class="field-group">
+                            <label for="project-stack">Technologies</label>
+                            <input id="project-stack" name="stack" type="text" placeholder="HTML, CSS, JavaScript, API REST">
+                        </div>
+
+                        <div class="field-group">
+                            <label for="project-link">Lien de démonstration</label>
+                            <input id="project-link" name="link" type="url" placeholder="https://mon-projet.example">
+                        </div>
+
+                        <div class="field-group field-group-full">
+                            <label for="project-description">Description</label>
+                            <textarea id="project-description" name="description" rows="5" placeholder="Décris le projet, ses objectifs et sa valeur ajoutée." required></textarea>
+                        </div>
+
+                        <button class="button button-primary button-full" type="submit">Ajouter le projet</button>
+                    </form>
+                </div>
+
+                <div class="studio-workspace">
+                    <section class="workspace-panel">
+                        <div class="panel-heading panel-heading-inline">
+                            <div>
+                                <p class="eyebrow">Catalogue dynamique</p>
+                                <h2>Projets du portfolio</h2>
                             </div>
-                        </article>
-                    </div>
-                </section>
+                            <span class="badge" id="project-count-badge">0 projet</span>
+                        </div>
+
+                        <div class="project-grid" id="projects-container" aria-live="polite"></div>
+                    </section>
+
+                    <aside class="workspace-panel detail-panel" id="project-detail-panel">
+                        <div class="detail-empty" id="project-detail-empty">
+                            <p class="eyebrow">Détails</p>
+                            <h2>Sélectionne un projet</h2>
+                            <p>
+                                La fonction <code>detaillerProjet()</code> affiche ici les caractéristiques du projet choisi.
+                            </p>
+                        </div>
+
+                        <div class="detail-content hidden" id="project-detail-content">
+                            <img id="detail-image" src="" alt="">
+                            <div class="detail-body">
+                                <p class="eyebrow" id="detail-kicker">Projet</p>
+                                <h2 id="detail-title"></h2>
+                                <p id="detail-description"></p>
+                                <div class="tag-list" id="detail-tags"></div>
+                                <div class="detail-meta">
+                                    <span>ID : <strong id="detail-id"></strong></span>
+                                    <a id="detail-link" href="#" target="_blank" rel="noreferrer">Ouvrir la démo</a>
+                                </div>
+                                <button class="button button-danger button-full" type="button" id="detail-delete">
+                                    Supprimer ce projet
+                                </button>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
             </section>
         </main>
 
-        <footer class="border-t border-slate-800 bg-brand-dark text-white">
-            <div class="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-6 text-sm md:flex-row md:items-center md:justify-between md:px-6">
-                <div class="flex items-center gap-3">
-                    <img src="images/logo.jpg" alt="Logo MonPortfolio" class="h-12 w-12 rounded-full border border-brand-accent object-cover">
-                    <p class="font-medium">© 2026 Mon Portfolio</p>
-                </div>
-                <div class="flex flex-wrap items-center gap-4">
-                    <a href="https://facebook.com" target="_blank" rel="noreferrer" class="transition hover:scale-105">
-                        <img src="https://img.icons8.com/color/48/facebook-new.png" alt="Facebook" class="h-10 w-10">
-                    </a>
-                    <a href="https://instagram.com" target="_blank" rel="noreferrer" class="transition hover:scale-105">
-                        <img src="https://img.icons8.com/color/48/instagram-new.png" alt="Instagram" class="h-10 w-10">
-                    </a>
-                    <a href="https://linkedin.com" target="_blank" rel="noreferrer" class="transition hover:scale-105">
-                        <img src="https://img.icons8.com/color/48/linkedin.png" alt="LinkedIn" class="h-10 w-10">
-                    </a>
-                </div>
-            </div>
+        <footer class="site-footer">
+            <p>Portfolio Lab SPA, conçu pour une démonstration JavaScript claire, élégante et exploitable en soutenance.</p>
         </footer>
     </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js" defer></script>
 </body>
 </html>
