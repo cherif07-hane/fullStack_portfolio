@@ -592,6 +592,17 @@ button {
     margin-top: 18px;
 }
 
+.panel-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+}
+
+.import-label {
+    min-height: 46px;
+}
+
 .field-group {
     flex: 1 1 calc(50% - 7px);
     display: flex;

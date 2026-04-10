@@ -21,6 +21,8 @@ const references = {
     linkInput: null,
     descriptionInput: null,
     submitButton: null,
+    exportButton: null,
+    importFile: null,
     deleteModal: null,
     deleteModalText: null,
     cancelDelete: null,
@@ -58,6 +60,8 @@ function referencerContenusHTML() {
     references.linkInput = document.querySelector("#project-link");
     references.descriptionInput = document.querySelector("#project-description");
     references.submitButton = document.querySelector("#project-submit-button");
+    references.exportButton = document.querySelector("#export-projects");
+    references.importFile = document.querySelector("#import-projects-file");
     references.deleteModal = document.querySelector("#delete-modal");
     references.deleteModalText = document.querySelector("#delete-modal-text");
     references.cancelDelete = document.querySelector("#cancel-delete");
@@ -309,6 +313,49 @@ function lireFichierCommeDataURL(fichier) {
     });
 }
 
+function telechargerFichier(nom, contenu) {
+    const blob = new Blob([contenu], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const lien = document.createElement("a");
+    lien.href = url;
+    lien.download = nom;
+    lien.click();
+    URL.revokeObjectURL(url);
+}
+
+function exporterProjets() {
+    telechargerFichier("portfolio-projects.json", JSON.stringify(projets, null, 2));
+    afficherToast("Export JSON cree.");
+}
+
+async function importerProjets(event) {
+    const fichier = event.target.files?.[0];
+
+    if (!fichier) {
+        return;
+    }
+
+    const contenu = await fichier.text();
+
+    try {
+        const donnees = JSON.parse(contenu);
+
+        if (!Array.isArray(donnees)) {
+            throw new Error("Format invalide.");
+        }
+
+        projets.length = 0;
+        donnees.forEach((projet) => projets.push(projet));
+        sauvegarderProjets();
+        rendreProjets();
+        afficherToast("Import JSON reussi.");
+    } catch (erreur) {
+        afficherToast("Import impossible.");
+    } finally {
+        event.target.value = "";
+    }
+}
+
 async function lireFormulaire() {
     const donnees = new FormData(references.form);
     const fichier = references.imageFile.files?.[0];
@@ -379,6 +426,8 @@ function gererHash() {
 function initialiserEvenements() {
     window.addEventListener("hashchange", gererHash);
     references.form.addEventListener("submit", ajouterProjet);
+    references.exportButton.addEventListener("click", exporterProjets);
+    references.importFile.addEventListener("change", importerProjets);
     references.cancelDelete.addEventListener("click", fermerConfirmationSuppression);
     references.confirmDelete.addEventListener("click", confirmerSuppressionProjet);
     references.deleteModal.addEventListener("click", (event) => {
