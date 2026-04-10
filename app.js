@@ -1,399 +1,276 @@
-const API_URL = "http://localhost:3000/projets";
+const projets = Array.isArray(window.PORTFOLIO_PROJECTS) ? [...window.PORTFOLIO_PROJECTS] : [];
 
-let projets = [];
-let references = {};
-let apiDisponible = false;
-let projetSelectionneId = null;
+const references = {
+    viewLinks: [],
+    views: [],
+    projectsContainer: null,
+    countBadge: null,
+    statsProjects: null,
+    searchInput: null,
+    kindFilter: null,
+    form: null,
+    toast: null,
+    imageFile: null
+};
+
 let toastTimeoutId = null;
-
-const projetsDemo = [
-    {
-        id: "portfolio-1",
-        title: "Portfolio Motion",
-        image: "images/projet1.jpg",
-        stack: ["HTML", "CSS", "JavaScript"],
-        description: "Landing page éditoriale avec mise en avant du storytelling, transitions douces et hiérarchie visuelle premium.",
-        link: "https://example.com/portfolio-motion"
-    },
-    {
-        id: "portfolio-2",
-        title: "Studio Data UI",
-        image: "images/projet2.jpg",
-        stack: ["Dashboard", "API REST", "UI"],
-        description: "Interface d'analyse pour suivre des indicateurs de performance et mettre en scène les données de manière lisible.",
-        link: "https://example.com/studio-data-ui"
-    },
-    {
-        id: "portfolio-3",
-        title: "Creative Case Study",
-        image: "images/Projet3.jpg",
-        stack: ["Responsive", "Branding", "UX"],
-        description: "Présentation d'un cas client avec blocs narratifs, détail du process créatif et galerie optimisée pour mobile.",
-        link: "https://example.com/creative-case-study"
-    }
-];
+const state = {
+    search: "",
+    kind: "all"
+};
 
 function referencerContenusHTML() {
-    references = {
-        form: document.querySelector("#project-form"),
-        projectsContainer: document.querySelector("#projects-container"),
-        countBadge: document.querySelector("#project-count-badge"),
-        statsProjects: document.querySelector("#stats-projets"),
-        statsSource: document.querySelector("#stats-source"),
-        refreshButton: document.querySelector("#refresh-projects"),
-        toast: document.querySelector("#toast"),
-        apiDot: document.querySelector("#api-dot"),
-        apiStatusTitle: document.querySelector("#api-status-title"),
-        apiStatusText: document.querySelector("#api-status-text"),
-        detailPanel: document.querySelector("#project-detail-panel"),
-        detailEmpty: document.querySelector("#project-detail-empty"),
-        detailContent: document.querySelector("#project-detail-content"),
-        detailImage: document.querySelector("#detail-image"),
-        detailKicker: document.querySelector("#detail-kicker"),
-        detailTitle: document.querySelector("#detail-title"),
-        detailDescription: document.querySelector("#detail-description"),
-        detailTags: document.querySelector("#detail-tags"),
-        detailId: document.querySelector("#detail-id"),
-        detailLink: document.querySelector("#detail-link"),
-        detailDelete: document.querySelector("#detail-delete")
-    };
+    references.viewLinks = Array.from(document.querySelectorAll("[data-view-link]"));
+    references.views = Array.from(document.querySelectorAll("[data-view]"));
+    references.projectsContainer = document.querySelector("#projects-container");
+    references.countBadge = document.querySelector("#project-count-badge");
+    references.statsProjects = document.querySelector("#stats-projets");
+    references.searchInput = document.querySelector("#project-search");
+    references.kindFilter = document.querySelector("#project-kind-filter");
+    references.form = document.querySelector("#project-form");
+    references.toast = document.querySelector("#toast");
+    references.imageFile = document.querySelector("#project-image-file");
 }
 
-function genererIdUnique() {
-    if (window.crypto?.randomUUID) {
-        return crypto.randomUUID();
+function afficherVue(nomVue) {
+    const vuesDisponibles = ["accueil", "projets", "parcours", "contact"];
+    const vueDemandee = vuesDisponibles.includes(nomVue) ? nomVue : "accueil";
+
+    references.views.forEach((vue) => {
+        vue.classList.toggle("active", vue.dataset.view === vueDemandee);
+    });
+
+    references.viewLinks.forEach((lien) => {
+        lien.classList.toggle("active", lien.dataset.viewLink === vueDemandee);
+    });
+}
+
+function allerVersCible(idCible) {
+    if (!idCible) {
+        return;
     }
 
-    return `projet-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    window.setTimeout(() => {
+        const cible = document.getElementById(idCible);
+        cible?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 60);
 }
 
-function normaliserProjet(projet) {
-    const pile = Array.isArray(projet.stack)
-        ? projet.stack
-        : String(projet.stack || "")
-            .split(",")
-            .map((item) => item.trim())
-            .filter(Boolean);
-
-    return {
-        id: String(projet.id),
-        title: projet.title || projet.libelle || "Projet sans titre",
-        image: projet.image || projet.imageSrc || "images/projet1.jpg",
-        stack: pile,
-        description: projet.description || "Aucune description fournie.",
-        link: projet.link || "#"
-    };
-}
-
-function afficherToast(message, type = "info") {
-    const prefixe = {
-        info: "Info",
-        success: "Succès",
-        error: "Erreur"
-    }[type] || "Info";
-
-    references.toast.textContent = `${prefixe} : ${message}`;
+function afficherToast(message) {
+    references.toast.textContent = message;
     references.toast.classList.add("visible");
-
     window.clearTimeout(toastTimeoutId);
     toastTimeoutId = window.setTimeout(() => {
         references.toast.classList.remove("visible");
-    }, 2600);
-}
-
-function mettreAJourEtatApi(disponible, message) {
-    apiDisponible = disponible;
-    references.apiDot.classList.remove("online", "offline");
-    references.apiDot.classList.add(disponible ? "online" : "offline");
-    references.apiStatusTitle.textContent = disponible ? "API connectée" : "Mode démo local";
-    references.apiStatusText.textContent = message;
-    references.statsSource.textContent = disponible ? "json-server" : "Mémoire";
+    }, 2400);
 }
 
 function mettreAJourCompteurs() {
-    const total = projets.length;
+    const total = filtrerProjets().length;
     references.countBadge.textContent = `${total} projet${total > 1 ? "s" : ""}`;
-    references.statsProjects.textContent = String(total);
+    references.statsProjects.textContent = String(projets.length);
 }
 
-function creerBoutonCarte(label, classe, gestionnaire) {
-    const bouton = document.createElement("button");
-    bouton.type = "button";
-    bouton.className = classe;
-    bouton.textContent = label;
-    bouton.addEventListener("click", gestionnaire);
-    return bouton;
+function creerTag(texte) {
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = texte;
+    return tag;
 }
 
-function creerProjet(idUnique, libelle, sourceImage, description = "", technologies = [], lien = "#") {
+function creerCarteProjet(projet) {
     const carte = document.createElement("article");
     carte.className = "project-card";
-    carte.dataset.projectId = idUnique;
-
-    if (projetSelectionneId === idUnique) {
-        carte.classList.add("active");
-    }
 
     const image = document.createElement("img");
-    image.src = sourceImage;
-    image.alt = `Illustration du projet ${libelle}`;
+    image.src = projet.image;
+    image.alt = projet.title;
     image.loading = "lazy";
 
     const corps = document.createElement("div");
     corps.className = "project-card-body";
 
-    const titre = document.createElement("h3");
-    titre.textContent = libelle;
+    const top = document.createElement("div");
+    top.className = "project-card-top";
 
-    const texte = document.createElement("p");
-    texte.textContent = description;
+    const type = document.createElement("span");
+    type.className = "project-type";
+    type.textContent = projet.kind;
+
+    const periode = document.createElement("span");
+    periode.className = "project-period";
+    periode.textContent = projet.id;
+
+    top.appendChild(type);
+    top.appendChild(periode);
+
+    const titre = document.createElement("h3");
+    titre.textContent = projet.title;
+
+    const description = document.createElement("p");
+    description.textContent = projet.description;
 
     const tags = document.createElement("div");
     tags.className = "tag-list";
-    technologies.slice(0, 3).forEach((technologie) => {
-        const tag = document.createElement("span");
-        tag.className = "tag";
-        tag.textContent = technologie;
-        tags.appendChild(tag);
+    projet.stack.slice(0, 3).forEach((technologie) => {
+        tags.appendChild(creerTag(technologie));
     });
 
     const actions = document.createElement("div");
     actions.className = "project-card-actions";
-    actions.appendChild(creerBoutonCarte("Détailler", "mini-button", () => detaillerProjet(idUnique)));
-    actions.appendChild(creerBoutonCarte("Supprimer", "mini-button delete", () => supprimerProjet(idUnique)));
 
-    if (lien && lien !== "#") {
-        const ouvrir = document.createElement("a");
-        ouvrir.className = "mini-button";
-        ouvrir.href = lien;
-        ouvrir.target = "_blank";
-        ouvrir.rel = "noreferrer";
-        ouvrir.textContent = "Visiter";
-        actions.appendChild(ouvrir);
-    }
+    const voirPlus = document.createElement("a");
+    voirPlus.className = "mini-button";
+    voirPlus.href = `project-detail.html?id=${encodeURIComponent(projet.id)}`;
+    voirPlus.target = "_blank";
+    voirPlus.rel = "noreferrer";
+    voirPlus.textContent = "Voir details";
 
+    const supprimer = document.createElement("button");
+    supprimer.type = "button";
+    supprimer.className = "mini-button delete";
+    supprimer.textContent = "Supprimer";
+    supprimer.addEventListener("click", () => supprimerProjet(projet.id));
+
+    actions.appendChild(voirPlus);
+    actions.appendChild(supprimer);
+
+    corps.appendChild(top);
     corps.appendChild(titre);
-    corps.appendChild(texte);
-
-    if (tags.childElementCount > 0) {
-        corps.appendChild(tags);
-    }
-
+    corps.appendChild(description);
+    corps.appendChild(tags);
     corps.appendChild(actions);
+
     carte.appendChild(image);
     carte.appendChild(corps);
 
     return carte;
 }
 
-function rendreListeProjets() {
+function filtrerProjets() {
+    return projets.filter((projet) => {
+        const recherche = state.search.toLowerCase();
+        const correspondRecherche = !recherche
+            || projet.title.toLowerCase().includes(recherche)
+            || projet.description.toLowerCase().includes(recherche)
+            || projet.stack.some((item) => item.toLowerCase().includes(recherche));
+
+        const correspondType = state.kind === "all" || projet.kind === state.kind;
+        return correspondRecherche && correspondType;
+    });
+}
+
+function rendreProjets() {
     references.projectsContainer.innerHTML = "";
 
-    projets.forEach((projet) => {
-        const carte = creerProjet(
-            projet.id,
-            projet.title,
-            projet.image,
-            projet.description,
-            projet.stack,
-            projet.link
-        );
-
-        references.projectsContainer.appendChild(carte);
+    filtrerProjets().forEach((projet) => {
+        references.projectsContainer.appendChild(creerCarteProjet(projet));
     });
 
     mettreAJourCompteurs();
 }
 
-function detaillerProjet(idProjet) {
-    const projet = projets.find((item) => item.id === String(idProjet));
+function supprimerProjet(idProjet) {
+    const index = projets.findIndex((item) => item.id === idProjet);
 
-    if (!projet) {
-        afficherToast("Projet introuvable.", "error");
+    if (index === -1) {
         return;
     }
 
-    projetSelectionneId = projet.id;
-    references.detailEmpty.classList.add("hidden");
-    references.detailContent.classList.remove("hidden");
-    references.detailImage.src = projet.image;
-    references.detailImage.alt = `Aperçu du projet ${projet.title}`;
-    references.detailKicker.textContent = "Projet sélectionné";
-    references.detailTitle.textContent = projet.title;
-    references.detailDescription.textContent = projet.description;
-    references.detailId.textContent = projet.id;
-    references.detailLink.href = projet.link && projet.link !== "#" ? projet.link : "#";
-    references.detailLink.textContent = projet.link && projet.link !== "#" ? "Ouvrir la démo" : "Lien non disponible";
-    references.detailLink.setAttribute("aria-disabled", projet.link && projet.link !== "#" ? "false" : "true");
-    references.detailDelete.onclick = () => supprimerProjet(projet.id);
+    const projet = projets[index];
+    const suppressionConfirmee = window.confirm(`Confirmer la suppression du projet "${projet.title}" ?`);
 
-    references.detailTags.innerHTML = "";
-    projet.stack.forEach((technologie) => {
-        const tag = document.createElement("span");
-        tag.className = "tag";
-        tag.textContent = technologie;
-        references.detailTags.appendChild(tag);
-    });
+    if (!suppressionConfirmee) {
+        return;
+    }
 
-    document.querySelectorAll(".project-card").forEach((carte) => {
-        carte.classList.toggle("active", carte.dataset.projectId === projet.id);
+    const [supprime] = projets.splice(index, 1);
+    rendreProjets();
+    afficherToast(`Projet supprime : ${supprime.title}`);
+}
+
+function lireFichierCommeDataURL(fichier) {
+    return new Promise((resolve, reject) => {
+        const lecteur = new FileReader();
+        lecteur.onload = () => resolve(String(lecteur.result || ""));
+        lecteur.onerror = () => reject(new Error("Impossible de lire le fichier."));
+        lecteur.readAsDataURL(fichier);
     });
 }
 
-function preparerDonneesFormulaire() {
+async function lireFormulaire() {
     const donnees = new FormData(references.form);
+    const fichier = references.imageFile.files?.[0];
+    let image = String(donnees.get("image") || "").trim();
+
+    if (fichier) {
+        image = await lireFichierCommeDataURL(fichier);
+    }
 
     return {
-        id: genererIdUnique(),
+        id: String(donnees.get("period") || "").trim(),
         title: String(donnees.get("title") || "").trim(),
-        image: String(donnees.get("image") || "").trim(),
+        image: image || "images/projet1.jpg",
         stack: String(donnees.get("stack") || "")
             .split(",")
             .map((item) => item.trim())
             .filter(Boolean),
         description: String(donnees.get("description") || "").trim(),
-        link: String(donnees.get("link") || "").trim() || "#"
+        link: String(donnees.get("link") || "").trim() || "#",
+        kind: "Projet personnel",
+        points: ["Projet ajoute depuis le portfolio"]
     };
 }
 
-async function ajouterProjet(projet) {
-    const nouveauProjet = normaliserProjet(projet);
-
-    try {
-        let projetPersistant = nouveauProjet;
-
-        if (apiDisponible) {
-            const reponse = await fetch(API_URL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(nouveauProjet)
-            });
-
-            if (!reponse.ok) {
-                throw new Error("La sauvegarde distante a échoué.");
-            }
-
-            projetPersistant = normaliserProjet(await reponse.json());
-        }
-
-        projets.unshift(projetPersistant);
-        const carte = creerProjet(
-            projetPersistant.id,
-            projetPersistant.title,
-            projetPersistant.image,
-            projetPersistant.description,
-            projetPersistant.stack,
-            projetPersistant.link
-        );
-
-        references.projectsContainer.prepend(carte);
-        mettreAJourCompteurs();
-        detaillerProjet(projetPersistant.id);
-        afficherToast("Le projet a été ajouté avec succès.", "success");
-        return true;
-    } catch (erreur) {
-        afficherToast(erreur.message || "Impossible d'ajouter le projet.", "error");
-        return false;
-    }
-}
-
-async function supprimerProjet(idProjet) {
-    const idNormalise = String(idProjet);
-    const projet = projets.find((item) => item.id === idNormalise);
-
-    if (!projet) {
-        afficherToast("Le projet à supprimer est introuvable.", "error");
-        return;
-    }
-
-    try {
-        if (apiDisponible) {
-            const reponse = await fetch(`${API_URL}/${encodeURIComponent(idNormalise)}`, {
-                method: "DELETE"
-            });
-
-            if (!reponse.ok) {
-                throw new Error("La suppression distante a échoué.");
-            }
-        }
-
-        projets = projets.filter((item) => item.id !== idNormalise);
-        projetSelectionneId = projets[0]?.id ?? null;
-        rendreListeProjets();
-
-        if (projetSelectionneId) {
-            detaillerProjet(projetSelectionneId);
-        } else {
-            references.detailContent.classList.add("hidden");
-            references.detailEmpty.classList.remove("hidden");
-        }
-
-        afficherToast(`Le projet "${projet.title}" a été supprimé.`, "success");
-    } catch (erreur) {
-        afficherToast(erreur.message || "Suppression impossible.", "error");
-    }
-}
-
-async function chargerProjets() {
-    try {
-        const reponse = await fetch(API_URL);
-
-        if (!reponse.ok) {
-            throw new Error("Réponse serveur inattendue.");
-        }
-
-        const donnees = await reponse.json();
-        projets = donnees.map(normaliserProjet);
-        mettreAJourEtatApi(true, "Les projets sont chargés depuis json-server.");
-    } catch (erreur) {
-        projets = projetsDemo.map(normaliserProjet);
-        mettreAJourEtatApi(false, "json-server est indisponible, les données de démonstration sont utilisées.");
-    }
-
-    rendreListeProjets();
-
-    if (projets[0]) {
-        detaillerProjet(projets[0].id);
-    }
-}
-
-async function gererSoumissionFormulaire(evenement) {
+async function ajouterProjet(evenement) {
     evenement.preventDefault();
 
-    const projet = preparerDonneesFormulaire();
+    const nouveauProjet = await lireFormulaire();
 
-    if (!projet.title || !projet.image || !projet.description) {
-        afficherToast("Renseigne au minimum le libellé, l'image et la description.", "error");
+    if (!nouveauProjet.id || !nouveauProjet.title || !nouveauProjet.description) {
+        afficherToast("Renseigne la periode, le titre et la description.");
         return;
     }
 
-    const ajoute = await ajouterProjet(projet);
-
-    if (ajoute) {
-        references.form.reset();
-        window.location.hash = "#studio";
-    }
+    projets.unshift(nouveauProjet);
+    references.form.reset();
+    rendreProjets();
+    afficherVue("projets");
+    window.location.hash = "#projets";
+    afficherToast(`Projet ajoute : ${nouveauProjet.title}`);
 }
 
 function gererHash() {
-    if (window.location.hash.startsWith("#projet-")) {
-        const idProjet = window.location.hash.replace("#projet-", "");
-        detaillerProjet(idProjet);
-    }
+    const hash = window.location.hash || "#accueil";
+    const vue = hash.replace("#", "") || "accueil";
+    afficherVue(vue);
 }
 
 function initialiserEvenements() {
-    references.form.addEventListener("submit", gererSoumissionFormulaire);
-    references.refreshButton.addEventListener("click", chargerProjets);
     window.addEventListener("hashchange", gererHash);
+    references.form.addEventListener("submit", ajouterProjet);
+    references.searchInput.addEventListener("input", (event) => {
+        state.search = event.target.value.trim();
+        rendreProjets();
+    });
+    references.kindFilter.addEventListener("change", (event) => {
+        state.kind = event.target.value;
+        rendreProjets();
+    });
+
+    references.viewLinks.forEach((lien) => {
+        lien.addEventListener("click", () => {
+            const vue = lien.dataset.viewLink || "accueil";
+            afficherVue(vue);
+            allerVersCible(lien.dataset.scrollTarget);
+        });
+    });
 }
 
-async function initialiserApplication() {
+function initialiserApplication() {
     referencerContenusHTML();
     initialiserEvenements();
-    await chargerProjets();
+    rendreProjets();
     gererHash();
 }
 
