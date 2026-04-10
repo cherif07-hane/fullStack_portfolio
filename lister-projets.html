@@ -2,101 +2,20 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="0; url=index.html#studio">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des projets</title>
-    <link rel="icon" type="image/jpeg" href="images/logo.jpg">
+    <title>Redirection vers la SPA</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="min-h-screen bg-brand-light font-body text-slate-900">
-    <div class="flex min-h-screen flex-col">
-        <header class="border-b border-slate-800 bg-brand-dark text-white">
-            <div class="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-5 md:flex-row md:items-center md:justify-between md:px-6">
-                <div class="flex items-center justify-between">
-                    <a href="index.html" class="flex items-center gap-3">
-                        <img src="images/logo.jpg" alt="Logo MonPortfolio" class="h-12 w-12 rounded-full border border-brand-accent object-cover">
-                        <span class="text-2xl font-bold tracking-wide">MonPortfolio</span>
-                    </a>
-
-                    <details class="md:hidden">
-                        <summary class="cursor-pointer list-none rounded-full border border-brand-accent px-4 py-2 text-sm font-semibold text-brand-accent">
-                            Menu
-                        </summary>
-                        <nav class="mt-4 flex flex-col gap-3 rounded-2xl border border-slate-700 bg-slate-900 p-4 text-sm font-semibold">
-                            <a href="index.html" class="hover:text-brand-accent">Accueil</a>
-                            <a href="lister-projets.html" class="text-brand-accent">Projets</a>
-                            <a href="ajouter-projet.html" class="hover:text-brand-accent">Ajouter</a>
-                        </nav>
-                    </details>
-                </div>
-
-                <nav class="hidden text-sm font-semibold md:flex md:items-center md:gap-6">
-                    <a href="index.html" class="pb-1 hover:text-brand-accent">Accueil</a>
-                    <a href="lister-projets.html" class="border-b-2 border-brand-accent pb-1 text-brand-accent">Projets</a>
-                    <a href="ajouter-projet.html" class="rounded-full border border-brand-accent px-4 py-2 text-center hover:bg-brand-accent hover:text-brand-dark">Ajouter</a>
-                </nav>
+<body>
+    <main class="page-shell">
+        <section class="content-section">
+            <div class="workspace-panel">
+                <p class="eyebrow">Redirection</p>
+                <h1>Cette page a été fusionnée dans la SPA.</h1>
+                <p>Si la redirection ne fonctionne pas, ouvre <a href="index.html#studio">la section projets de l'application</a>.</p>
             </div>
-        </header>
-
-        <main class="flex-1">
-            <section class="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-10 md:px-6 md:py-14">
-                <div class="rounded-3xl border border-slate-200 bg-white px-6 py-8 md:px-10">
-                    <p class="text-sm font-semibold uppercase tracking-[0.3em] text-brand-primary">Catalogue</p>
-                    <h1 class="mt-3 text-4xl font-bold text-brand-dark">Liste des projets</h1>
-                    <p class="mt-4 max-w-3xl text-base leading-7 text-slate-700">
-                        Chaque carte met en avant un projet avec une image, un titre, une courte description et un lien vers la page de détail dans une mise en page responsive.
-                    </p>
-                </div>
-
-                <div class="-mx-3 flex flex-wrap">
-                    <article class="mb-6 w-full px-3 md:w-1/2 lg:w-1/3">
-                        <div class="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-5">
-                            <img src="images/projet1.jpg" alt="Aperçu du projet 1" class="h-56 w-full rounded-2xl border border-slate-200 object-cover">
-                            <h2 class="mt-5 text-2xl font-semibold text-brand-dark">Projet 1</h2>
-                            <p class="mt-3 flex-1 text-sm leading-6 text-slate-600">Interface de portfolio centrée sur la clarté du contenu, la cohérence visuelle et la lisibilité des sections.</p>
-                            <a href="detailler-projet.html" class="mt-5 inline-flex w-fit rounded-full border border-brand-primary px-4 py-2 text-sm font-semibold text-brand-primary hover:bg-brand-primary hover:text-white">Voir les détails</a>
-                        </div>
-                    </article>
-
-                    <article class="mb-6 w-full px-3 md:w-1/2 lg:w-1/3">
-                        <div class="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-5">
-                            <img src="images/projet2.jpg" alt="Aperçu du projet 2" class="h-56 w-full rounded-2xl border border-slate-200 object-cover">
-                            <h2 class="mt-5 text-2xl font-semibold text-brand-dark">Projet 2</h2>
-                            <p class="mt-3 flex-1 text-sm leading-6 text-slate-600">Mise en page responsive basée sur le flex pour un affichage fluide selon la largeur de l'écran et des espacements réguliers.</p>
-                            <a href="detailler-projet.html" class="mt-5 inline-flex w-fit rounded-full border border-brand-primary px-4 py-2 text-sm font-semibold text-brand-primary hover:bg-brand-primary hover:text-white">Voir les détails</a>
-                        </div>
-                    </article>
-
-                    <article class="mb-6 w-full px-3 md:w-1/2 lg:w-1/3">
-                        <div class="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-5">
-                            <img src="images/Projet3.jpg" alt="Aperçu du projet 3" class="h-56 w-full rounded-2xl border border-slate-200 object-cover">
-                            <h2 class="mt-5 text-2xl font-semibold text-brand-dark">Projet 3</h2>
-                            <p class="mt-3 flex-1 text-sm leading-6 text-slate-600">Exemple de personnalisation Tailwind avec une palette, une typographie et des composants visuels homogènes.</p>
-                            <a href="detailler-projet.html" class="mt-5 inline-flex w-fit rounded-full border border-brand-primary px-4 py-2 text-sm font-semibold text-brand-primary hover:bg-brand-primary hover:text-white">Voir les détails</a>
-                        </div>
-                    </article>
-                </div>
-            </section>
-        </main>
-
-        <footer class="border-t border-slate-800 bg-brand-dark text-white">
-            <div class="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-6 text-sm md:flex-row md:items-center md:justify-between md:px-6">
-                <div class="flex items-center gap-3">
-                    <img src="images/logo.jpg" alt="Logo MonPortfolio" class="h-12 w-12 rounded-full border border-brand-accent object-cover">
-                    <p class="font-medium">© 2026 Mon Portfolio</p>
-                </div>
-                <div class="flex flex-wrap items-center gap-4">
-                    <a href="https://facebook.com" target="_blank" rel="noreferrer" class="transition hover:scale-105">
-                        <img src="https://img.icons8.com/color/48/facebook-new.png" alt="Facebook" class="h-10 w-10">
-                    </a>
-                    <a href="https://instagram.com" target="_blank" rel="noreferrer" class="transition hover:scale-105">
-                        <img src="https://img.icons8.com/color/48/instagram-new.png" alt="Instagram" class="h-10 w-10">
-                    </a>
-                    <a href="https://linkedin.com" target="_blank" rel="noreferrer" class="transition hover:scale-105">
-                        <img src="https://img.icons8.com/color/48/linkedin.png" alt="LinkedIn" class="h-10 w-10">
-                    </a>
-                </div>
-            </div>
-        </footer>
-    </div>
+        </section>
+    </main>
 </body>
 </html>
