@@ -13,6 +13,7 @@ const references = {
     searchInput: null,
     kindFilter: null,
     sortSelect: null,
+    resetToolsButton: null,
     editId: null,
     titleInput: null,
     periodInput: null,
@@ -52,6 +53,7 @@ function referencerContenusHTML() {
     references.searchInput = document.querySelector("#project-search");
     references.kindFilter = document.querySelector("#project-kind-filter");
     references.sortSelect = document.querySelector("#project-sort");
+    references.resetToolsButton = document.querySelector("#reset-project-tools");
     references.editId = document.querySelector("#project-edit-id");
     references.titleInput = document.querySelector("#project-title");
     references.periodInput = document.querySelector("#project-period");
@@ -262,6 +264,21 @@ function filtrerProjets() {
     return projetsFiltres;
 }
 
+function reinitialiserOutilsProjet() {
+    state.search = "";
+    state.kind = "all";
+    state.sort = "recent";
+    references.searchInput.value = "";
+    references.kindFilter.value = "all";
+    references.sortSelect.value = "recent";
+    rendreProjets();
+}
+
+function reinitialiserEditionFormulaire() {
+    references.editId.value = "";
+    references.submitButton.textContent = "Ajouter le projet";
+}
+
 function rendreProjets() {
     references.projectsContainer.innerHTML = "";
 
@@ -409,8 +426,7 @@ async function ajouterProjet(evenement) {
     }
 
     references.form.reset();
-    references.editId.value = "";
-    references.submitButton.textContent = "Ajouter le projet";
+    reinitialiserEditionFormulaire();
     rendreProjets();
     sauvegarderProjets();
     afficherVue("projets");
@@ -423,9 +439,33 @@ function gererHash() {
     afficherVue(vue);
 }
 
+function gererRaccourcisClavier(event) {
+    if (event.key === "/" && document.activeElement?.tagName !== "INPUT" && document.activeElement?.tagName !== "TEXTAREA") {
+        event.preventDefault();
+        references.searchInput.focus();
+        return;
+    }
+
+    if (event.key.toLowerCase() === "n" && !event.ctrlKey && !event.metaKey) {
+        afficherVue("projets");
+        allerVersCible("add-project-panel");
+        return;
+    }
+
+    if (event.key === "Escape") {
+        if (!references.deleteModal.classList.contains("hidden")) {
+            fermerConfirmationSuppression();
+        }
+
+        reinitialiserEditionFormulaire();
+    }
+}
+
 function initialiserEvenements() {
     window.addEventListener("hashchange", gererHash);
+    window.addEventListener("keydown", gererRaccourcisClavier);
     references.form.addEventListener("submit", ajouterProjet);
+    references.resetToolsButton.addEventListener("click", reinitialiserOutilsProjet);
     references.exportButton.addEventListener("click", exporterProjets);
     references.importFile.addEventListener("change", importerProjets);
     references.cancelDelete.addEventListener("click", fermerConfirmationSuppression);

@@ -442,9 +442,13 @@ button {
 
 .project-toolbar {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 220px 220px;
+    grid-template-columns: minmax(0, 1fr) 220px 220px 190px;
     gap: 14px;
     margin-top: 18px;
+}
+
+.toolbar-action {
+    align-self: end;
 }
 
 .project-card {
