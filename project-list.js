@@ -30,6 +30,8 @@ const listState = {
     selectedId: ""
 };
 
+let apiDisponible = true;
+
 function summarize(text, maxLength = 150) {
     if (text.length <= maxLength) {
         return text;
@@ -173,11 +175,14 @@ function renderLoadingError() {
 async function loadProjects() {
     try {
         const liste = await fetchTousProjets();
+        apiDisponible = true;
         setProjets(liste);
         renderProjects();
     } catch (error) {
-        console.error("Impossible de charger les projets.", error);
-        renderLoadingError();
+        console.warn("API indisponible, chargement des projets locaux.", error);
+        apiDisponible = false;
+        setProjets();
+        renderProjects();
     }
 }
 
@@ -199,12 +204,21 @@ async function deleteSelectedProject() {
     }
 
     try {
-        await deleteProjet(project.id);
+        if (apiDisponible) {
+            await deleteProjet(project.id);
+        }
         supprimerEnMemoire(project.id);
         listState.selectedId = "";
         renderProjects();
     } catch (error) {
         console.error("Impossible de supprimer le projet.", error);
+        if (!apiDisponible) {
+            supprimerEnMemoire(project.id);
+            listState.selectedId = "";
+            renderProjects();
+            return;
+        }
+
         window.alert("La suppression a echoue. Verifie que json-server est lance.");
     }
 }
