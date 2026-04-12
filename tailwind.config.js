@@ -5,7 +5,11 @@ module.exports = {
         "./ajouter-projet.html",
         "./lister-projets.html",
         "./detailler-projet.html",
+        "./*.js",
     ],
+    corePlugins: {
+        preflight: false,
+    },
     theme: {
         extend: {
             colors: {
