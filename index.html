@@ -1,254 +1,357 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Lab SPA | Vanilla JavaScript</title>
-    <meta name="description" content="Application SPA de gestion de portfolio en Vanilla JavaScript avec persistance json-server et interface premium.">
+    <title>Thierno Cherif HANE | Portfolio</title>
+    <meta name="description" content="Portfolio de Thierno Cherif HANE, technicien support informatique specialise en administration systeme, reseau et developpement web.">
     <link rel="icon" type="image/jpeg" href="images/logo.jpg">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="page-shell">
         <header class="site-header">
-            <a class="brand" href="#top" aria-label="Retour en haut de page">
-                <img src="images/logo.jpg" alt="Logo Portfolio Lab">
+            <a class="brand" href="#top" aria-label="Retour en haut">
+                <img src="images/logo.jpg" alt="Logo de Thierno Cherif HANE">
                 <div>
-                    <span class="eyebrow">Portfolio Lab</span>
-                    <strong>SPA Portfolio Manager</strong>
+                    <span class="eyebrow">Portfolio professionnel</span>
+                    <strong>Thierno Cherif HANE</strong>
                 </div>
             </a>
 
             <nav class="site-nav" aria-label="Navigation principale">
-                <a href="#guide">Guide JavaScript</a>
-                <a href="#demo">Démonstration</a>
-                <a href="#studio">Studio projets</a>
-                <a class="nav-cta" href="#studio">Créer un projet</a>
+                <a href="#accueil" data-view-link="accueil">Accueil</a>
+                <a href="#projets" data-view-link="projets">Projets</a>
+                <a href="#projets" data-view-link="projets" data-scroll-target="add-project-panel">Ajouter projet</a>
+                <a href="#parcours" data-view-link="parcours">Parcours</a>
+                <a class="nav-cta" href="#contact" data-view-link="contact">Contact</a>
             </nav>
         </header>
 
         <main id="top">
-            <section class="hero">
-                <div class="hero-copy">
-                    <p class="eyebrow">Single Page Application</p>
-                    <h1>Un portfolio moderne, dynamique et persistant en Vanilla JavaScript.</h1>
-                    <p class="hero-text">
-                        Cette réalisation transforme le portfolio existant en une SPA complète : gestion des projets en mémoire,
-                        interactions DOM, requêtes AJAX avec <code>json-server</code>, et une interface pensée pour donner un rendu
-                        plus premium, plus clair et plus crédible.
-                    </p>
+            <div class="view-switcher">
+                <button class="view-chip active" type="button" data-view-link="accueil">Accueil</button>
+                <button class="view-chip" type="button" data-view-link="projets">Projets</button>
+                <button class="view-chip" type="button" data-view-link="projets" data-scroll-target="add-project-panel">Ajouter</button>
+                <button class="view-chip" type="button" data-view-link="parcours">Parcours</button>
+                <button class="view-chip" type="button" data-view-link="contact">Contact</button>
+            </div>
 
-                    <div class="hero-actions">
-                        <a class="button button-primary" href="#studio">Lancer la démo</a>
-                        <a class="button button-ghost" href="#guide">Voir le plan JavaScript</a>
-                    </div>
+            <section class="app-view active" data-view="accueil">
+                <section class="hero">
+                    <div class="hero-copy">
+                        <p class="eyebrow">Technicien support informatique</p>
+                        <h1>Administration systeme, reseau et support technique.</h1>
+                        <p class="hero-text">Diplome en Informatique Systemes et Reseaux, avec des competences en maintenance, diagnostic reseau et support utilisateur.</p>
 
-                    <div class="hero-metrics" aria-label="Résumé rapide">
-                        <article>
-                            <strong id="stats-projets">0</strong>
-                            <span>projets affichés</span>
-                        </article>
-                        <article>
-                            <strong id="stats-source">Mémoire</strong>
-                            <span>source de données</span>
-                        </article>
-                        <article>
-                            <strong>SPA</strong>
-                            <span>une seule page</span>
-                        </article>
-                    </div>
-                </div>
+                        <div class="hero-actions">
+                            <a class="button button-primary" href="#projets" data-view-link="projets">Voir mes projets</a>
+                            <a class="button button-secondary" href="#projets" data-view-link="projets" data-scroll-target="add-project-panel">Ajouter un projet</a>
+                            <a class="button button-ghost" href="#contact" data-view-link="contact">Contact</a>
+                        </div>
 
-                <aside class="hero-panel">
-                    <p class="eyebrow">Cibles du livrable</p>
-                    <ul class="feature-list">
-                        <li>Référencer les contenus HTML avec <code>document.querySelector</code>.</li>
-                        <li>Manipuler le tableau <code>projets</code> en mémoire.</li>
-                        <li>Créer, détailler et supprimer des projets dans le DOM.</li>
-                        <li>Persister les données via une API REST factice.</li>
-                    </ul>
-
-                    <div class="status-card">
-                        <span class="status-dot" id="api-dot"></span>
-                        <div>
-                            <strong id="api-status-title">Connexion API en attente</strong>
-                            <p id="api-status-text">Chargement initial des projets...</p>
+                        <div class="hero-metrics">
+                            <article>
+                                <strong id="stats-projets">0</strong>
+                                <span>projets</span>
+                            </article>
+                            <article>
+                                <strong>Windows / Linux</strong>
+                                <span>systemes</span>
+                            </article>
+                            <article>
+                                <strong>Reseaux</strong>
+                                <span>support</span>
+                            </article>
                         </div>
                     </div>
-                </aside>
-            </section>
 
-            <section class="content-section" id="guide">
-                <div class="section-heading">
-                    <p class="eyebrow">Plan du cours</p>
-                    <h2>Guide JavaScript structuré selon les notions demandées</h2>
-                    <p>
-                        La page présente la démo technique et rappelle les points attendus : présentation, inclusion,
-                        concepts fondamentaux, références de recherche et mise en pratique dans une application réelle.
-                    </p>
-                </div>
-
-                <div class="guide-grid">
-                    <article class="guide-card">
-                        <span class="guide-index">01</span>
-                        <h3>Présentation de JavaScript</h3>
-                        <p>
-                            JavaScript est le langage du comportement côté client. Il permet de rendre une page vivante,
-                            d'interagir avec l'utilisateur, de manipuler le DOM et d'échanger des données avec un serveur.
-                        </p>
-                    </article>
-
-                    <article class="guide-card">
-                        <span class="guide-index">02</span>
-                        <h3>Inclusion du JavaScript</h3>
-                        <p>
-                            Ici, le script est inclus avec <code>&lt;script src="app.js" defer&gt;&lt;/script&gt;</code>
-                            afin d'attendre le chargement du HTML avant l'exécution de la logique applicative.
-                        </p>
-                    </article>
-
-                    <article class="guide-card guide-card-wide">
-                        <span class="guide-index">03</span>
-                        <h3>Concepts mobilisés dans la démo</h3>
-                        <div class="concept-grid">
-                            <div><strong>Variables</strong><span><code>let projets = []</code> conserve l'état de l'application.</span></div>
-                            <div><strong>Opérateurs</strong><span>Utilisation de <code>===</code>, <code>?.</code>, <code>||</code>, <code>??</code> et des gabarits.</span></div>
-                            <div><strong>Entrée / Sortie</strong><span>Lecture du formulaire, affichage des messages et rendu visuel des cartes.</span></div>
-                            <div><strong>Structures</strong><span><code>if</code>, <code>try/catch</code>, boucles et méthodes de tableaux.</span></div>
-                            <div><strong>Fonctions</strong><span>Fonctions nommées, fonctions fléchées, callbacks d'événements et promesses.</span></div>
-                            <div><strong>Événements</strong><span><code>submit</code>, <code>click</code>, <code>hashchange</code> et interactions boutons.</span></div>
-                            <div><strong>Objets</strong><span>Chaque projet est un objet contenant id, libellé, image, stack et description.</span></div>
-                            <div><strong>Objet Array</strong><span><code>map</code>, <code>find</code>, <code>filter</code>, <code>unshift</code>.</span></div>
-                            <div><strong>Objet Document</strong><span>Référencement et création de nœuds HTML dynamiques.</span></div>
-                            <div><strong>Objet Form</strong><span>Lecture via <code>FormData</code> et validation légère du formulaire.</span></div>
-                            <div><strong>Requêtes AJAX</strong><span><code>fetch()</code> pour <code>GET</code>, <code>POST</code> et <code>DELETE</code>.</span></div>
-                        </div>
-                    </article>
-
-                    <article class="guide-card">
-                        <span class="guide-index">04</span>
-                        <h3>Références</h3>
-                        <ul class="reference-list">
-                            <li><a href="https://developer.mozilla.org/fr/docs/Web/JavaScript" target="_blank" rel="noreferrer">MDN JavaScript</a></li>
-                            <li><a href="https://developer.mozilla.org/fr/docs/Web/API/Document_Object_Model" target="_blank" rel="noreferrer">MDN DOM</a></li>
-                            <li><a href="https://developer.mozilla.org/fr/docs/Web/API/Fetch_API" target="_blank" rel="noreferrer">MDN Fetch API</a></li>
-                            <li><a href="https://github.com/typicode/json-server" target="_blank" rel="noreferrer">Documentation json-server</a></li>
+                    <aside class="hero-panel">
+                        <p class="eyebrow">Points forts</p>
+                        <ul class="feature-list">
+                            <li>Installation et maintenance Windows / Linux.</li>
+                            <li>Diagnostic reseau et resolution d'incidents.</li>
+                            <li>Support utilisateur et depannage.</li>
+                            <li>HTML, CSS, Tailwind CSS, JavaScript, Python.</li>
                         </ul>
-                    </article>
-                </div>
-            </section>
 
-            <section class="content-section demo-section" id="demo">
-                <div class="section-heading">
-                    <p class="eyebrow">Démo</p>
-                    <h2>Application Web SPA de gestion de portfolio</h2>
-                    <p>
-                        Le formulaire ajoute un projet, la liste se met à jour sans rechargement, la carte de détail affiche les
-                        caractéristiques sélectionnées, et les traitements peuvent être persistés sur <code>json-server</code>.
-                    </p>
-                </div>
+                        <div class="status-card">
+                            <span class="status-dot online"></span>
+                            <div>
+                                <strong>Disponible</strong>
+                                <p>Ouvert aux opportunites en support informatique et administration systeme et reseau.</p>
+                            </div>
+                        </div>
+                    </aside>
+                </section>
 
-                <div class="demo-banner">
-                    <div>
-                        <strong>API attendue :</strong>
-                        <code>http://localhost:3000/projets</code>
-                    </div>
-                    <button class="button button-secondary" type="button" id="refresh-projects">
-                        Recharger depuis l'API
-                    </button>
-                </div>
-            </section>
-
-            <section class="studio" id="studio">
-                <div class="studio-form-panel">
-                    <div class="panel-heading">
-                        <p class="eyebrow">Créer</p>
-                        <h2>Ajouter un projet au portfolio</h2>
-                        <p>
-                            Le code JavaScript référence ce formulaire, extrait ses valeurs, crée un objet projet,
-                            puis appelle <code>ajouterProjet()</code> pour mettre à jour la mémoire, l'interface et l'API.
-                        </p>
+                <section class="content-section">
+                    <div class="section-heading">
+                        <p class="eyebrow">Competences</p>
+                        <h2>Competences principales</h2>
                     </div>
 
-                    <form id="project-form" class="project-form">
-                        <div class="field-group">
-                            <label for="project-title">Libellé</label>
-                            <input id="project-title" name="title" type="text" placeholder="Ex: Dashboard analytique" required>
+                    <div class="info-grid">
+                        <article class="info-card">
+                            <span class="info-index">01</span>
+                            <h3>Systemes</h3>
+                            <p>Windows, Linux, utilisateurs, services, deploiement et maintenance.</p>
+                        </article>
+
+                        <article class="info-card">
+                            <span class="info-index">02</span>
+                            <h3>Reseaux</h3>
+                            <p>TCP/IP, DNS, DHCP, HTTP, FTP, SMTP, LAN/WAN.</p>
+                        </article>
+
+                        <article class="info-card">
+                            <span class="info-index">03</span>
+                            <h3>Support</h3>
+                            <p>Assistance technique, incidents, depannage materiel et logiciel.</p>
+                        </article>
+
+                        <article class="info-card">
+                            <span class="info-index">04</span>
+                            <h3>Developpement</h3>
+                            <p>HTML, CSS, Tailwind CSS, JavaScript, Python, Java, Git, GitHub.</p>
+                        </article>
+                    </div>
+                </section>
+            </section>
+
+            <section class="app-view" data-view="projets">
+                <section class="content-section">
+                    <div class="section-heading">
+                        <p class="eyebrow">Portfolio</p>
+                        <h2>Mes projets</h2>
+                        <div class="hero-actions">
+                            <a class="button button-primary" href="#add-project-panel">Ajouter un projet</a>
                         </div>
+                    </div>
+                </section>
 
-                        <div class="field-group">
-                            <label for="project-image">Source de l'image</label>
-                            <input id="project-image" name="image" type="url" placeholder="https://... ou images/projet1.jpg" required>
-                        </div>
-
-                        <div class="field-group">
-                            <label for="project-stack">Technologies</label>
-                            <input id="project-stack" name="stack" type="text" placeholder="HTML, CSS, JavaScript, API REST">
-                        </div>
-
-                        <div class="field-group">
-                            <label for="project-link">Lien de démonstration</label>
-                            <input id="project-link" name="link" type="url" placeholder="https://mon-projet.example">
-                        </div>
-
-                        <div class="field-group field-group-full">
-                            <label for="project-description">Description</label>
-                            <textarea id="project-description" name="description" rows="5" placeholder="Décris le projet, ses objectifs et sa valeur ajoutée." required></textarea>
-                        </div>
-
-                        <button class="button button-primary button-full" type="submit">Ajouter le projet</button>
-                    </form>
-                </div>
-
-                <div class="studio-workspace">
-                    <section class="workspace-panel">
+                <section class="project-shell">
+                    <section class="workspace-panel project-list-panel">
                         <div class="panel-heading panel-heading-inline">
                             <div>
-                                <p class="eyebrow">Catalogue dynamique</p>
-                                <h2>Projets du portfolio</h2>
+                                <p class="eyebrow">Galerie</p>
+                                <h2>Projets</h2>
                             </div>
                             <span class="badge" id="project-count-badge">0 projet</span>
+                        </div>
+
+                        <div class="project-toolbar">
+                            <div class="field-group">
+                                <label for="project-search">Recherche</label>
+                                <input id="project-search" type="search" placeholder="Chercher un projet">
+                            </div>
+
+                            <div class="field-group">
+                                <label for="project-kind-filter">Type</label>
+                                <select id="project-kind-filter">
+                                    <option value="all">Tous</option>
+                                    <option value="Projet academique">Projet academique</option>
+                                    <option value="Projet web">Projet web</option>
+                                    <option value="Projet personnel">Projet personnel</option>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="project-grid" id="projects-container" aria-live="polite"></div>
                     </section>
 
-                    <aside class="workspace-panel detail-panel" id="project-detail-panel">
-                        <div class="detail-empty" id="project-detail-empty">
-                            <p class="eyebrow">Détails</p>
-                            <h2>Sélectionne un projet</h2>
-                            <p>
-                                La fonction <code>detaillerProjet()</code> affiche ici les caractéristiques du projet choisi.
-                            </p>
-                        </div>
-
-                        <div class="detail-content hidden" id="project-detail-content">
-                            <img id="detail-image" src="" alt="">
-                            <div class="detail-body">
-                                <p class="eyebrow" id="detail-kicker">Projet</p>
-                                <h2 id="detail-title"></h2>
-                                <p id="detail-description"></p>
-                                <div class="tag-list" id="detail-tags"></div>
-                                <div class="detail-meta">
-                                    <span>ID : <strong id="detail-id"></strong></span>
-                                    <a id="detail-link" href="#" target="_blank" rel="noreferrer">Ouvrir la démo</a>
-                                </div>
-                                <button class="button button-danger button-full" type="button" id="detail-delete">
-                                    Supprimer ce projet
-                                </button>
+                    <aside class="project-side">
+                        <section class="workspace-panel form-panel" id="add-project-panel">
+                            <div class="panel-heading">
+                                <p class="eyebrow">Ajouter</p>
+                                <h2>Ajouter un projet</h2>
+                                <p>Ajoute une nouvelle realisation.</p>
                             </div>
-                        </div>
+
+                            <form id="project-form" class="project-form">
+                                <div class="field-group">
+                                    <label for="project-title">Titre du projet</label>
+                                    <input id="project-title" name="title" type="text" placeholder="Ex: Projet support" required>
+                                </div>
+
+                                <div class="field-group">
+                                    <label for="project-period">Periode</label>
+                                    <input id="project-period" name="period" type="text" placeholder="Ex: 2025" required>
+                                </div>
+
+                                <div class="field-group field-group-full">
+                                    <label for="project-image-file">Televerser une image</label>
+                                    <input id="project-image-file" name="imageFile" type="file" accept="image/*">
+                                </div>
+
+                                <div class="field-group field-group-full">
+                                    <label for="project-image">Image</label>
+                                    <input id="project-image" name="image" type="text" placeholder="Ex: images/projet1.jpg">
+                                </div>
+
+                                <div class="field-group field-group-full">
+                                    <label for="project-stack">Technologies</label>
+                                    <input id="project-stack" name="stack" type="text" placeholder="Ex: HTML, CSS, Linux">
+                                </div>
+
+                                <div class="field-group field-group-full">
+                                    <label for="project-link">Lien</label>
+                                    <input id="project-link" name="link" type="text" placeholder="Ex: https://github.com/...">
+                                </div>
+
+                                <div class="field-group field-group-full">
+                                    <label for="project-description">Description</label>
+                                    <textarea id="project-description" name="description" rows="5" placeholder="Ce que tu as realise." required></textarea>
+                                </div>
+
+                                <button class="button button-primary button-full" type="submit">Ajouter le projet</button>
+                            </form>
+                        </section>
+
+                        <section class="workspace-panel detail-panel">
+                            <div class="detail-empty" id="project-detail-empty">
+                                <p class="eyebrow">Detail</p>
+                                <h2>Selectionne un projet</h2>
+                                <p>Le detail du projet apparait ici.</p>
+                            </div>
+
+                            <div class="detail-content hidden" id="project-detail-content">
+                                <img id="detail-image" src="" alt="">
+                                <div class="detail-body">
+                                    <p class="eyebrow" id="detail-kicker">Projet</p>
+                                    <h2 id="detail-title"></h2>
+                                    <p id="detail-description"></p>
+                                    <div class="tag-list" id="detail-tags"></div>
+                                    <ul class="detail-list" id="detail-points"></ul>
+                                    <div class="detail-meta">
+                                        <span>Periode : <strong id="detail-id"></strong></span>
+                                        <a id="detail-link" href="#" target="_blank" rel="noreferrer">Voir la ressource</a>
+                                    </div>
+                                    <button class="button button-danger button-full" type="button" id="detail-delete">Supprimer ce projet</button>
+                                </div>
+                            </div>
+                        </section>
                     </aside>
-                </div>
+                </section>
+            </section>
+
+            <section class="app-view" data-view="parcours">
+                <section class="content-section">
+                    <div class="section-heading">
+                        <p class="eyebrow">Parcours</p>
+                        <h2>Parcours</h2>
+                    </div>
+
+                    <div class="info-grid">
+                        <article class="info-card">
+                            <span class="info-index">01</span>
+                            <h3>Formation</h3>
+                            <p>Licence 1, 2 et 3 en Informatique Systemes et Reseaux. Formation AWS en cours.</p>
+                        </article>
+
+                        <article class="info-card">
+                            <span class="info-index">02</span>
+                            <h3>Langues</h3>
+                            <p>Francais courant et anglais intermediaire.</p>
+                        </article>
+
+                        <article class="info-card">
+                            <span class="info-index">03</span>
+                            <h3>Qualites</h3>
+                            <p>Communication, rigueur, autonomie, esprit d'equipe.</p>
+                        </article>
+
+                        <article class="info-card">
+                            <span class="info-index">04</span>
+                            <h3>Interets</h3>
+                            <p>Reseaux, administration systeme, cloud, developpement web, sport.</p>
+                        </article>
+                    </div>
+                </section>
+            </section>
+
+            <section class="app-view" data-view="contact">
+                <section class="content-section">
+                    <div class="section-heading">
+                        <p class="eyebrow">Contact</p>
+                        <h2>Contact</h2>
+                    </div>
+
+                    <div class="info-grid">
+                        <article class="info-card">
+                            <span class="info-index">01</span>
+                            <h3>Email</h3>
+                            <p><a href="mailto:richef360@gmail.com">richef360@gmail.com</a></p>
+                        </article>
+
+                        <article class="info-card">
+                            <span class="info-index">02</span>
+                            <h3>Telephone</h3>
+                            <p><a href="tel:+221783299663">+221 78 329 96 63</a></p>
+                        </article>
+
+                        <article class="info-card">
+                            <span class="info-index">03</span>
+                            <h3>GitHub</h3>
+                            <p><a href="https://github.com/cherif07-hane" target="_blank" rel="noreferrer">github.com/cherif07-hane</a></p>
+                        </article>
+
+                        <article class="info-card">
+                            <span class="info-index">04</span>
+                            <h3>Localisation</h3>
+                            <p>Dakar, Senegal</p>
+                        </article>
+                    </div>
+                </section>
             </section>
         </main>
 
         <footer class="site-footer">
-            <p>Portfolio Lab SPA, conçu pour une démonstration JavaScript claire, élégante et exploitable en soutenance.</p>
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <p class="eyebrow">Thierno Cherif HANE</p>
+                    <h2>Portfolio professionnel</h2>
+                    <p>Technicien support informatique.</p>
+                </div>
+
+                <div class="footer-contact">
+                    <p class="eyebrow">Coordonnees</p>
+                    <a href="mailto:richef360@gmail.com">richef360@gmail.com</a>
+                    <a href="tel:+221783299663">+221 78 329 96 63</a>
+                    <span>Dakar, Senegal</span>
+                </div>
+
+                <div class="footer-social">
+                    <p class="eyebrow">Reseaux sociaux</p>
+                    <div class="social-list">
+                        <a class="social-link linkedin" href="https://linkedin.com/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                            <span>in</span>
+                            <strong>LinkedIn</strong>
+                        </a>
+                        <a class="social-link instagram" href="https://instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram">
+                            <span>ig</span>
+                            <strong>Instagram</strong>
+                        </a>
+                        <a class="social-link facebook" href="https://facebook.com/" target="_blank" rel="noreferrer" aria-label="Facebook">
+                            <span>f</span>
+                            <strong>Facebook</strong>
+                        </a>
+                        <a class="social-link twitter" href="https://x.com/" target="_blank" rel="noreferrer" aria-label="Twitter">
+                            <span>x</span>
+                            <strong>Twitter</strong>
+                        </a>
+                        <a class="social-link github" href="https://github.com/cherif07-hane" target="_blank" rel="noreferrer" aria-label="GitHub">
+                            <span>gh</span>
+                            <strong>GitHub</strong>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </footer>
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="project-data.js"></script>
     <script src="app.js" defer></script>
 </body>
 </html>
