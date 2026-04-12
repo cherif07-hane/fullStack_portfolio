@@ -2,20 +2,117 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=index.html#studio">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirection vers la SPA</title>
+    <title>Ajouter un projet | Thierno Cherif HANE</title>
+    <meta name="description" content="Page d'ajout et de modification des projets du portfolio de Thierno Cherif HANE.">
+    <link rel="icon" type="image/jpeg" href="images/logo.jpg">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <main class="page-shell">
-        <section class="content-section">
-            <div class="workspace-panel">
-                <p class="eyebrow">Redirection</p>
-                <h1>Le formulaire fait maintenant partie de la SPA.</h1>
-                <p>Si besoin, ouvre directement <a href="index.html#studio">la zone de création des projets</a>.</p>
+    <div class="page-shell">
+        <header class="site-header">
+            <a class="brand" href="index.html" aria-label="Retour a l'accueil">
+                <img src="images/logo.jpg" alt="Logo de Thierno Cherif HANE">
+                <div>
+                    <span class="eyebrow">Gestion de projet</span>
+                    <strong>Thierno Cherif HANE</strong>
+                </div>
+            </a>
+
+            <nav class="site-nav" aria-label="Navigation formulaire">
+                <a href="index.html">Accueil</a>
+                <a href="lister-projets.html">Liste des projets</a>
+            </nav>
+        </header>
+
+        <main class="detail-page-main">
+            <section class="content-section">
+                <div class="section-heading">
+                    <p class="eyebrow">Projet</p>
+                    <h2 id="form-page-title">Ajouter un projet</h2>
+                    <p id="form-page-copy">Cette page sert uniquement a ajouter ou modifier un projet, sans melanger la liste complete.</p>
+                </div>
+            </section>
+
+            <section class="project-shell single-panel-layout">
+                <section class="workspace-panel form-panel">
+                    <div class="panel-heading">
+                        <p class="eyebrow">Formulaire</p>
+                        <h2 id="project-form-heading">Ajouter un projet</h2>
+                        <p>Renseigne les informations essentielles du projet.</p>
+                    </div>
+
+                    <form id="project-form" class="project-form">
+                        <input id="project-edit-id" name="editId" type="hidden">
+
+                        <div class="field-group">
+                            <label for="project-title">Titre du projet</label>
+                            <input id="project-title" name="title" type="text" placeholder="Ex: Serveur mail" required>
+                        </div>
+
+                        <div class="field-group">
+                            <label for="project-period">Periode</label>
+                            <input id="project-period" name="period" type="text" placeholder="Ex: 2026" required>
+                        </div>
+
+                        <div class="field-group field-group-full">
+                            <label for="project-image-file">Televerser une image</label>
+                            <input id="project-image-file" name="imageFile" type="file" accept="image/*">
+                        </div>
+
+                        <div class="field-group field-group-full">
+                            <label for="project-image">Image</label>
+                            <input id="project-image" name="image" type="text" placeholder="Ex: images/projet1.jpg">
+                        </div>
+
+                        <div class="field-group field-group-full">
+                            <label for="project-stack">Technologies</label>
+                            <input id="project-stack" name="stack" type="text" placeholder="Ex: HTML, CSS, Linux">
+                        </div>
+
+                        <div class="field-group field-group-full">
+                            <label for="project-link">Lien</label>
+                            <input id="project-link" name="link" type="text" placeholder="Ex: https://github.com/...">
+                        </div>
+
+                        <div class="field-group field-group-full">
+                            <label for="project-description">Description</label>
+                            <textarea id="project-description" name="description" rows="6" placeholder="Ce que tu as realise." required></textarea>
+                        </div>
+
+                        <div class="panel-actions">
+                            <button class="button button-primary" type="submit" id="project-submit-button">Ajouter le projet</button>
+                            <a class="button button-ghost" href="lister-projets.html">Retour a la liste</a>
+                        </div>
+                    </form>
+                </section>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <p class="eyebrow">Thierno Cherif HANE</p>
+                    <h2>Portfolio professionnel</h2>
+                    <p>Une page dediee pour ajouter ou mettre a jour les projets.</p>
+                </div>
+
+                <div class="footer-contact">
+                    <p class="eyebrow">Navigation</p>
+                    <a href="index.html">Accueil</a>
+                    <a href="lister-projets.html">Liste des projets</a>
+                </div>
+
+                <div class="footer-social">
+                    <p class="eyebrow">Conseil</p>
+                    <p>Ajoute seulement les informations utiles pour garder un portfolio plus clair et plus professionnel.</p>
+                </div>
             </div>
-        </section>
-    </main>
+        </footer>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="project-form.js"></script>
 </body>
 </html>

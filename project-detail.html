@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail du projet | Thierno Cherif HANE</title>
+    <meta name="description" content="Details d'un projet du portfolio de Thierno Cherif HANE.">
+    <link rel="icon" type="image/jpeg" href="images/logo.jpg">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="detail-page">
+    <div class="page-shell detail-shell">
+        <header class="site-header">
+            <a class="brand" href="lister-projets.html" aria-label="Retour a la liste des projets">
+                <img src="images/logo.jpg" alt="Logo de Thierno Cherif HANE">
+                <div>
+                    <span class="eyebrow">Detail projet</span>
+                    <strong>Thierno Cherif HANE</strong>
+                </div>
+            </a>
+
+            <nav class="site-nav" aria-label="Navigation detail">
+                <a href="lister-projets.html">Retour projets</a>
+            </nav>
+        </header>
+
+        <main class="detail-page-main">
+            <section class="detail-hero-card">
+                <div class="detail-hero-media">
+                    <img id="page-detail-image" src="" alt="">
+                </div>
+
+                <div class="detail-hero-copy">
+                    <p class="eyebrow" id="page-detail-kind">Projet</p>
+                    <h1 id="page-detail-title">Projet</h1>
+                    <p class="detail-summary" id="page-detail-description"></p>
+
+                    <div class="detail-meta-row">
+                        <span class="project-period" id="page-detail-period"></span>
+                        <a class="button button-secondary" id="page-detail-link" href="#" target="_blank" rel="noreferrer">Voir la ressource</a>
+                    </div>
+
+                    <div class="tag-list" id="page-detail-tags"></div>
+                </div>
+            </section>
+
+            <section class="detail-page-grid">
+                <article class="workspace-panel">
+                    <div class="panel-heading">
+                        <p class="eyebrow">Ce que j'ai realise</p>
+                        <h2>Points cles</h2>
+                    </div>
+                    <ul class="detail-list detail-list-strong" id="page-detail-points"></ul>
+                </article>
+
+                <article class="workspace-panel">
+                    <div class="panel-heading">
+                        <p class="eyebrow">Resume</p>
+                        <h2>Projet</h2>
+                    </div>
+                    <p class="detail-copy-block" id="page-detail-copy"></p>
+                </article>
+            </section>
+        </main>
+    </div>
+
+    <script type="module" src="project-detail.js"></script>
+</body>
+</html>

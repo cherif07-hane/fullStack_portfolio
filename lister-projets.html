@@ -2,20 +2,132 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=index.html#studio">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirection vers la SPA</title>
+    <title>Liste des projets | Thierno Cherif HANE</title>
+    <meta name="description" content="Liste des projets de Thierno Cherif HANE en systemes, reseaux et developpement web.">
+    <link rel="icon" type="image/jpeg" href="images/logo.jpg">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <main class="page-shell">
-        <section class="content-section">
-            <div class="workspace-panel">
-                <p class="eyebrow">Redirection</p>
-                <h1>Cette page a été fusionnée dans la SPA.</h1>
-                <p>Si la redirection ne fonctionne pas, ouvre <a href="index.html#studio">la section projets de l'application</a>.</p>
+    <div class="page-shell">
+        <header class="site-header">
+            <a class="brand" href="index.html" aria-label="Retour a l'accueil">
+                <img src="images/logo.jpg" alt="Logo de Thierno Cherif HANE">
+                <div>
+                    <span class="eyebrow">Liste des projets</span>
+                    <strong>Thierno Cherif HANE</strong>
+                </div>
+            </a>
+
+            <nav class="site-nav" aria-label="Navigation projets">
+                <a href="index.html">Accueil</a>
+                <a class="nav-cta" href="ajouter-projet.html">Ajouter projet</a>
+            </nav>
+        </header>
+
+        <main class="detail-page-main">
+            <section class="content-section">
+                <div class="section-heading">
+                    <p class="eyebrow">Portfolio</p>
+                    <h2>Mes projets</h2>
+                    <p>Une page simple pour parcourir les projets sans melanger la creation et la consultation.</p>
+                </div>
+            </section>
+
+            <section class="project-shell">
+                <section class="workspace-panel project-list-panel">
+                    <div class="panel-heading panel-heading-inline">
+                        <div>
+                            <p class="eyebrow">Galerie</p>
+                            <h2>Liste</h2>
+                        </div>
+                        <span class="badge" id="project-count-badge">0 projet</span>
+                    </div>
+
+                    <div class="project-toolbar">
+                        <div class="field-group">
+                            <label for="project-search">Recherche</label>
+                            <input id="project-search" type="text" placeholder="Titre, description ou technologie">
+                        </div>
+
+                        <div class="field-group">
+                            <label for="project-kind-filter">Type</label>
+                            <select id="project-kind-filter">
+                                <option value="all">Tous</option>
+                                <option value="Projet academique">Projet academique</option>
+                                <option value="Projet web">Projet web</option>
+                                <option value="Projet personnel">Projet personnel</option>
+                            </select>
+                        </div>
+
+                        <div class="field-group">
+                            <label for="project-sort">Tri</label>
+                            <select id="project-sort">
+                                <option value="recent">Plus recent</option>
+                                <option value="title">Titre A-Z</option>
+                                <option value="kind">Type</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="project-grid" id="projects-container" aria-live="polite"></div>
+                </section>
+
+                <aside class="project-side">
+                    <section class="workspace-panel detail-panel">
+                        <div class="detail-empty" id="project-detail-empty">
+                            <p class="eyebrow">Detail</p>
+                            <h2>Selectionne un projet</h2>
+                            <p>Clique sur une carte pour afficher le detail, modifier le projet ou le supprimer.</p>
+                        </div>
+
+                        <div class="detail-content hidden" id="project-detail-content">
+                            <img id="detail-image" src="" alt="">
+                            <div class="detail-body">
+                                <p class="eyebrow" id="detail-kicker">Projet</p>
+                                <h2 id="detail-title"></h2>
+                                <p id="detail-description"></p>
+                                <div class="tag-list" id="detail-tags"></div>
+                                <ul class="detail-list" id="detail-points"></ul>
+                                <div class="detail-meta">
+                                    <span>Periode : <strong id="detail-id"></strong></span>
+                                    <a id="detail-link" href="#" target="_blank" rel="noreferrer">Ouvrir le lien</a>
+                                </div>
+                                <div class="panel-actions detail-actions">
+                                    <a class="button button-secondary" id="detail-view-page" href="#">Page detail</a>
+                                    <a class="button button-secondary" id="detail-edit" href="#">Modifier ce projet</a>
+                                </div>
+                                <button class="button button-danger button-full" type="button" id="detail-delete">Supprimer ce projet</button>
+                            </div>
+                        </div>
+                    </section>
+                </aside>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <p class="eyebrow">Thierno Cherif HANE</p>
+                    <h2>Portfolio professionnel</h2>
+                    <p>Systemes, reseaux et developpement web.</p>
+                </div>
+
+                <div class="footer-contact">
+                    <p class="eyebrow">Navigation</p>
+                    <a href="index.html">Accueil</a>
+                    <a href="ajouter-projet.html">Ajouter un projet</a>
+                    <a href="project-detail.html?id=2026">Exemple detail</a>
+                </div>
+
+                <div class="footer-social">
+                    <p class="eyebrow">Objectif</p>
+                    <p>Une presentation plus claire des projets, sans surcharge entre la consultation et la creation.</p>
+                </div>
             </div>
-        </section>
-    </main>
+        </footer>
+    </div>
+
+    <script type="module" src="project-list.js"></script>
 </body>
 </html>

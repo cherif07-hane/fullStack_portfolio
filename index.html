@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thierno Cherif HANE | Portfolio</title>
-    <meta name="description" content="Portfolio de Thierno Cherif HANE, technicien support informatique specialise en administration systeme, reseau et developpement web.">
+    <meta name="description" content="Portfolio de Thierno Cherif HANE, oriente systemes, reseaux et developpement web avec une presentation claire de ses projets.">
     <link rel="icon" type="image/jpeg" href="images/logo.jpg">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -21,8 +21,8 @@
 
             <nav class="site-nav" aria-label="Navigation principale">
                 <a href="#accueil" data-view-link="accueil">Accueil</a>
-                <a href="#projets" data-view-link="projets">Projets</a>
-                <a href="#projets" data-view-link="projets" data-scroll-target="add-project-panel">Ajouter projet</a>
+                <a href="lister-projets.html">Projets</a>
+                <a href="ajouter-projet.html">Ajouter projet</a>
                 <a href="#parcours" data-view-link="parcours">Parcours</a>
                 <a class="nav-cta" href="#contact" data-view-link="contact">Contact</a>
             </nav>
@@ -31,8 +31,6 @@
         <main id="top">
             <div class="view-switcher">
                 <button class="view-chip active" type="button" data-view-link="accueil">Accueil</button>
-                <button class="view-chip" type="button" data-view-link="projets">Projets</button>
-                <button class="view-chip" type="button" data-view-link="projets" data-scroll-target="add-project-panel">Ajouter</button>
                 <button class="view-chip" type="button" data-view-link="parcours">Parcours</button>
                 <button class="view-chip" type="button" data-view-link="contact">Contact</button>
             </div>
@@ -40,13 +38,13 @@
             <section class="app-view active" data-view="accueil">
                 <section class="hero">
                     <div class="hero-copy">
-                        <p class="eyebrow">Technicien support informatique</p>
-                        <h1>Administration systeme, reseau et support technique.</h1>
-                        <p class="hero-text">Diplome en Informatique Systemes et Reseaux, avec des competences en maintenance, diagnostic reseau et support utilisateur.</p>
+                        <p class="eyebrow">Systemes, reseaux et web</p>
+                        <h1>Projets en systemes, reseaux et developpement web.</h1>
+                        <p class="hero-text">Parcours en Informatique Systemes et Reseaux avec des realisations concretes en administration systeme, services reseau et interface web.</p>
 
                         <div class="hero-actions">
-                            <a class="button button-primary" href="#projets" data-view-link="projets">Voir mes projets</a>
-                            <a class="button button-secondary" href="#projets" data-view-link="projets" data-scroll-target="add-project-panel">Ajouter un projet</a>
+                            <a class="button button-primary" href="lister-projets.html">Voir mes projets</a>
+                            <a class="button button-secondary" href="ajouter-projet.html">Ajouter un projet</a>
                             <a class="button button-ghost" href="#contact" data-view-link="contact">Contact</a>
                         </div>
 
@@ -61,7 +59,7 @@
                             </article>
                             <article>
                                 <strong>Reseaux</strong>
-                                <span>support</span>
+                                <span>services</span>
                             </article>
                         </div>
                     </div>
@@ -70,8 +68,8 @@
                         <p class="eyebrow">Points forts</p>
                         <ul class="feature-list">
                             <li>Installation et maintenance Windows / Linux.</li>
-                            <li>Diagnostic reseau et resolution d'incidents.</li>
-                            <li>Support utilisateur et depannage.</li>
+                            <li>Configuration de services reseau et systeme.</li>
+                            <li>Deploiement, securisation et organisation de projets.</li>
                             <li>HTML, CSS, Tailwind CSS, JavaScript, Python.</li>
                         </ul>
 
@@ -79,7 +77,7 @@
                             <span class="status-dot online"></span>
                             <div>
                                 <strong>Disponible</strong>
-                                <p>Ouvert aux opportunites en support informatique et administration systeme et reseau.</p>
+                                <p>Ouvert aux opportunites en systemes, reseaux et developpement web.</p>
                             </div>
                         </div>
                     </aside>
@@ -106,8 +104,8 @@
 
                         <article class="info-card">
                             <span class="info-index">03</span>
-                            <h3>Support</h3>
-                            <p>Assistance technique, incidents, depannage materiel et logiciel.</p>
+                            <h3>Services</h3>
+                            <p>Configuration, supervision, deploiement et organisation des environnements techniques.</p>
                         </article>
 
                         <article class="info-card">
@@ -116,158 +114,6 @@
                             <p>HTML, CSS, Tailwind CSS, JavaScript, Python, Java, Git, GitHub.</p>
                         </article>
                     </div>
-                </section>
-            </section>
-
-            <section class="app-view" data-view="projets">
-                <section class="content-section">
-                    <div class="section-heading">
-                        <p class="eyebrow">Portfolio</p>
-                        <h2>Mes projets</h2>
-                        <div class="hero-actions">
-                            <a class="button button-primary" href="#add-project-panel">Ajouter un projet</a>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="project-shell">
-                    <section class="workspace-panel project-list-panel">
-                        <div class="panel-heading panel-heading-inline">
-                            <div>
-                                <p class="eyebrow">Galerie</p>
-                                <h2>Projets</h2>
-                            </div>
-                            <span class="badge" id="project-count-badge">0 projet</span>
-                        </div>
-
-                        <div class="project-stats">
-                            <article class="stat-card">
-                                <strong id="filtered-count">0</strong>
-                                <span>affiches</span>
-                            </article>
-                            <article class="stat-card">
-                                <strong id="kind-count">0</strong>
-                                <span>types</span>
-                            </article>
-                            <article class="stat-card">
-                                <strong id="tech-count">0</strong>
-                                <span>technologies</span>
-                            </article>
-                        </div>
-
-                        <div class="project-toolbar">
-                            <div class="field-group">
-                                <label for="project-search">Recherche</label>
-                                <input id="project-search" type="search" placeholder="Chercher un projet">
-                            </div>
-
-                            <div class="field-group">
-                                <label for="project-kind-filter">Type</label>
-                                <select id="project-kind-filter">
-                                    <option value="all">Tous</option>
-                                    <option value="Projet academique">Projet academique</option>
-                                    <option value="Projet web">Projet web</option>
-                                    <option value="Projet personnel">Projet personnel</option>
-                                </select>
-                            </div>
-
-                            <div class="field-group">
-                                <label for="project-sort">Tri</label>
-                                <select id="project-sort">
-                                    <option value="recent">Plus recent</option>
-                                    <option value="title">Titre A-Z</option>
-                                    <option value="kind">Type</option>
-                                </select>
-                            </div>
-
-                            <div class="field-group toolbar-action">
-                                <label>Actions</label>
-                                <button class="button button-ghost button-full" type="button" id="reset-project-tools">Reinitialiser</button>
-                            </div>
-                        </div>
-
-                        <div class="project-grid" id="projects-container" aria-live="polite"></div>
-                    </section>
-
-                    <aside class="project-side">
-                        <section class="workspace-panel form-panel" id="add-project-panel">
-                            <div class="panel-heading">
-                                <p class="eyebrow">Ajouter</p>
-                                <h2>Ajouter un projet</h2>
-                                <p>Ajoute une nouvelle realisation.</p>
-                            </div>
-
-                            <form id="project-form" class="project-form">
-                                <input id="project-edit-id" name="editId" type="hidden">
-                                <div class="field-group">
-                                    <label for="project-title">Titre du projet</label>
-                                    <input id="project-title" name="title" type="text" placeholder="Ex: Projet support" required>
-                                </div>
-
-                                <div class="field-group">
-                                    <label for="project-period">Periode</label>
-                                    <input id="project-period" name="period" type="text" placeholder="Ex: 2025" required>
-                                </div>
-
-                                <div class="field-group field-group-full">
-                                    <label for="project-image-file">Televerser une image</label>
-                                    <input id="project-image-file" name="imageFile" type="file" accept="image/*">
-                                </div>
-
-                                <div class="field-group field-group-full">
-                                    <label for="project-image">Image</label>
-                                    <input id="project-image" name="image" type="text" placeholder="Ex: images/projet1.jpg">
-                                </div>
-
-                                <div class="field-group field-group-full">
-                                    <label for="project-stack">Technologies</label>
-                                    <input id="project-stack" name="stack" type="text" placeholder="Ex: HTML, CSS, Linux">
-                                </div>
-
-                                <div class="field-group field-group-full">
-                                    <label for="project-link">Lien</label>
-                                    <input id="project-link" name="link" type="text" placeholder="Ex: https://github.com/...">
-                                </div>
-
-                                <div class="field-group field-group-full">
-                                    <label for="project-description">Description</label>
-                                    <textarea id="project-description" name="description" rows="5" placeholder="Ce que tu as realise." required></textarea>
-                                </div>
-
-                                <button class="button button-primary button-full" type="submit" id="project-submit-button">Ajouter le projet</button>
-                            </form>
-
-                            <div class="panel-actions">
-                                <button class="button button-secondary" type="button" id="export-projects">Exporter JSON</button>
-                                <label class="button button-ghost import-label" for="import-projects-file">Importer JSON</label>
-                                <input id="import-projects-file" type="file" accept=".json" hidden>
-                            </div>
-                        </section>
-
-                        <section class="workspace-panel detail-panel">
-                            <div class="detail-empty" id="project-detail-empty">
-                                <p class="eyebrow">Detail</p>
-                                <h2>Selectionne un projet</h2>
-                                <p>Le detail du projet apparait ici.</p>
-                            </div>
-
-                            <div class="detail-content hidden" id="project-detail-content">
-                                <img id="detail-image" src="" alt="">
-                                <div class="detail-body">
-                                    <p class="eyebrow" id="detail-kicker">Projet</p>
-                                    <h2 id="detail-title"></h2>
-                                    <p id="detail-description"></p>
-                                    <div class="tag-list" id="detail-tags"></div>
-                                    <ul class="detail-list" id="detail-points"></ul>
-                                    <div class="detail-meta">
-                                        <span>Periode : <strong id="detail-id"></strong></span>
-                                        <a id="detail-link" href="#" target="_blank" rel="noreferrer">Voir la ressource</a>
-                                    </div>
-                                    <button class="button button-danger button-full" type="button" id="detail-delete">Supprimer ce projet</button>
-                                </div>
-                            </div>
-                        </section>
-                    </aside>
                 </section>
             </section>
 
@@ -347,7 +193,7 @@
                 <div class="footer-brand">
                     <p class="eyebrow">Thierno Cherif HANE</p>
                     <h2>Portfolio professionnel</h2>
-                    <p>Technicien support informatique.</p>
+                    <p>Systemes, reseaux et developpement web.</p>
                 </div>
 
                 <div class="footer-contact">
@@ -361,23 +207,37 @@
                     <p class="eyebrow">Reseaux sociaux</p>
                     <div class="social-list">
                         <a class="social-link linkedin" href="https://linkedin.com/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
-                            <span>in</span>
+                            <span class="social-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" role="img" aria-hidden="true" focusable="false">
+                                    <circle cx="6.4" cy="7" r="1.8" fill="currentColor"></circle>
+                                    <rect x="4.8" y="10" width="3.2" height="9.2" rx="1.2" fill="currentColor"></rect>
+                                    <path d="M11 19.2V10h3v1.3c.8-1 2-1.6 3.4-1.6 3 0 4.8 2 4.8 5.4v4.1H19V15.6c0-1.7-.7-2.8-2.2-2.8s-2.4 1.1-2.4 2.8v3.6H11Z" fill="currentColor"></path>
+                                </svg>
+                            </span>
                             <strong>LinkedIn</strong>
                         </a>
                         <a class="social-link instagram" href="https://instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram">
-                            <span>ig</span>
+                            <span class="social-icon" aria-hidden="true">
+                                <img src="https://cdn.simpleicons.org/instagram/ffffff" alt="" loading="lazy" decoding="async">
+                            </span>
                             <strong>Instagram</strong>
                         </a>
                         <a class="social-link facebook" href="https://facebook.com/" target="_blank" rel="noreferrer" aria-label="Facebook">
-                            <span>f</span>
+                            <span class="social-icon" aria-hidden="true">
+                                <img src="https://cdn.simpleicons.org/facebook/ffffff" alt="" loading="lazy" decoding="async">
+                            </span>
                             <strong>Facebook</strong>
                         </a>
                         <a class="social-link twitter" href="https://x.com/" target="_blank" rel="noreferrer" aria-label="Twitter">
-                            <span>x</span>
+                            <span class="social-icon" aria-hidden="true">
+                                <img src="https://cdn.simpleicons.org/x/ffffff" alt="" loading="lazy" decoding="async">
+                            </span>
                             <strong>Twitter</strong>
                         </a>
                         <a class="social-link github" href="https://github.com/cherif07-hane" target="_blank" rel="noreferrer" aria-label="GitHub">
-                            <span>gh</span>
+                            <span class="social-icon" aria-hidden="true">
+                                <img src="https://cdn.simpleicons.org/github/ffffff" alt="" loading="lazy" decoding="async">
+                            </span>
                             <strong>GitHub</strong>
                         </a>
                     </div>
@@ -398,7 +258,6 @@
             </div>
         </div>
     </div>
-    <script src="project-data.js"></script>
-    <script src="app.js" defer></script>
+    <script type="module" src="app.js"></script>
 </body>
 </html>
