@@ -38,8 +38,9 @@ function bindEvents() {
         link.addEventListener("click", (event) => {
             const viewName = link.dataset.viewLink || "accueil";
             const href = link.getAttribute("href") || "";
+            const cibleInterne = href.includes("#");
 
-            if (link.tagName === "A" && href.startsWith("#")) {
+            if (link.tagName === "A" && cibleInterne) {
                 event.preventDefault();
                 window.location.hash = viewName;
                 return;
