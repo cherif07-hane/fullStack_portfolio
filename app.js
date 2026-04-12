@@ -18,12 +18,17 @@ const references = {
     linkInput: null,
     descriptionInput: null,
     submitButton: null,
+    deleteModal: null,
+    deleteModalText: null,
+    cancelDelete: null,
+    confirmDelete: null,
     form: null,
     toast: null,
     imageFile: null
 };
 
 let toastTimeoutId = null;
+let projetASupprimerId = null;
 const state = {
     search: "",
     kind: "all",
@@ -47,6 +52,10 @@ function referencerContenusHTML() {
     references.linkInput = document.querySelector("#project-link");
     references.descriptionInput = document.querySelector("#project-description");
     references.submitButton = document.querySelector("#project-submit-button");
+    references.deleteModal = document.querySelector("#delete-modal");
+    references.deleteModalText = document.querySelector("#delete-modal-text");
+    references.cancelDelete = document.querySelector("#cancel-delete");
+    references.confirmDelete = document.querySelector("#confirm-delete");
     references.form = document.querySelector("#project-form");
     references.toast = document.querySelector("#toast");
     references.imageFile = document.querySelector("#project-image-file");
@@ -254,16 +263,28 @@ function supprimerProjet(idProjet) {
         return;
     }
 
-    const projet = projets[index];
-    const suppressionConfirmee = window.confirm(`Confirmer la suppression du projet "${projet.title}" ?`);
+    projetASupprimerId = idProjet;
+    references.deleteModalText.textContent = `Le projet "${projets[index].title}" sera retire du portfolio.`;
+    references.deleteModal.classList.remove("hidden");
+}
 
-    if (!suppressionConfirmee) {
+function fermerConfirmationSuppression() {
+    projetASupprimerId = null;
+    references.deleteModal.classList.add("hidden");
+}
+
+function confirmerSuppressionProjet() {
+    const index = projets.findIndex((item) => item.id === projetASupprimerId);
+
+    if (index === -1) {
+        fermerConfirmationSuppression();
         return;
     }
 
     const [supprime] = projets.splice(index, 1);
     rendreProjets();
     sauvegarderProjets();
+    fermerConfirmationSuppression();
     afficherToast(`Projet supprime : ${supprime.title}`);
 }
 
@@ -346,6 +367,13 @@ function gererHash() {
 function initialiserEvenements() {
     window.addEventListener("hashchange", gererHash);
     references.form.addEventListener("submit", ajouterProjet);
+    references.cancelDelete.addEventListener("click", fermerConfirmationSuppression);
+    references.confirmDelete.addEventListener("click", confirmerSuppressionProjet);
+    references.deleteModal.addEventListener("click", (event) => {
+        if (event.target === references.deleteModal) {
+            fermerConfirmationSuppression();
+        }
+    });
     references.searchInput.addEventListener("input", (event) => {
         state.search = event.target.value.trim();
         rendreProjets();

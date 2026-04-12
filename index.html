@@ -361,6 +361,17 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div class="modal-backdrop hidden" id="delete-modal">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
+            <p class="eyebrow">Confirmation</p>
+            <h2 id="delete-modal-title">Supprimer ce projet ?</h2>
+            <p id="delete-modal-text">Cette action retire le projet de ton portfolio.</p>
+            <div class="modal-actions">
+                <button class="button button-ghost" type="button" id="cancel-delete">Annuler</button>
+                <button class="button button-danger" type="button" id="confirm-delete">Confirmer</button>
+            </div>
+        </div>
+    </div>
     <script src="project-data.js"></script>
     <script src="app.js" defer></script>
 </body>
